@@ -7,31 +7,39 @@ public class Autopilot {
 	
 	public static void DriveForwardToDistance( double targetSpeed, double targetDistance ) {
 		if ( Autonomous.GetStageDistance() < targetDistance ) {
+			
 			Drivetrain.DriveToHeading( targetSpeed, LastBearing );
 			Autonomous.StillWorking = true;
+
 		} else { Drivetrain.Stop(); }
 	}
 
 	
 	public static void DriveReverseToDistance( double targetSpeed, double targetDistance ) {
 		if ( Autonomous.GetStageDistance() > -targetDistance ) {
+	
 			Drivetrain.DriveToHeading( -targetSpeed, LastBearing );
 			Autonomous.StillWorking = true;
+			
 		} else { Drivetrain.Stop(); }
 	}
 
 	
 	public static void DriveToSurface( double targetSpeed, double targetDistance ) {
 		if ( Navigation.GetRange() > targetDistance ) {
+
 			Drivetrain.DriveToHeading( targetSpeed, LastBearing );
 			Autonomous.StillWorking = true;
+
 		} else { Drivetrain.Stop(); }
 	}
 	
 	
 	public static void DriveToTarget( double targetSpeed, double targetDistance ) {
 		if ( Navigation.GetRange() > targetDistance ) {
+			
 			Autonomous.StillWorking = true;
+			
 		} else { Drivetrain.Stop(); }
 	}
 	
