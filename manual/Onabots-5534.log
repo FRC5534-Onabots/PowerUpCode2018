@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (TeX Live 2016/Debian) (preloaded format=xelatex 2017.8.31)  28 NOV 2017 14:40
+This is XeTeX, Version 3.14159265-2.6-0.99996 (TeX Live 2016/Debian) (preloaded format=xelatex 2017.8.31)  28 NOV 2017 15:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1415,19 +1415,21 @@ LaTeX Font Info:    Font shape `U/futm/m/n' will be
 (Font)              scaled to size 5.51999pt on input line 11.
 \c__siunitx_mathtt_int=\count335
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <20.74> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 25.
-LaTeX Font Info:    Try loading font information for U+futs on input line 25.
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 13.
+LaTeX Font Info:    Try loading font information for U+futs on input line 13.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/ufuts.fd
 File: ufuts.fd 2004/03/26 Fontinst v1.926 font definitions for U/futs.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 25--25
+Underfull \hbox (badness 10000) in paragraph at lines 13--13
 
  []
 
-LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <12> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 27.
-[1
+LaTeX Font Info:    Try loading font information for TS1+futs on input line 16.
+
+(/usr/share/texlive/texmf-dist/tex/latex/fourier/ts1futs.fd
+File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
+) [1
 
 
 
@@ -1436,28 +1438,16 @@ ospecials\catcode`\{=1\catcode`\}=2\relax \qr@savematrix@int}\def\qr@savematrix
 @int#1#2#3#4{\endgroup}\fi
 
 
+] [2
+
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 41--41
 
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 20.39996pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
+ []
 
-[2]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 20.39996pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <12> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 43.
 [3]
-LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 142.
-LaTeX Font Info:    Try loading font information for TS1+futs on input line 154
-.
- (/usr/share/texlive/texmf-dist/tex/latex/fourier/ts1futs.fd
-File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
-)
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 20.39996pt.
@@ -1472,8 +1462,8 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [5]
-LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 210.
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 158.
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1489,17 +1479,9 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [7]
-Package marginnote Info: Margin note 8.1 is on absolute page 8
-(marginnote)              on input line 340.
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 226.
 
-
-
-<QR code requested for "http://207.74.77.189/servicepics/" in version 0-M.>
-
-<Copying the QR code for "http://207.74.77.189/servicepics/" in version 3-M as 
-previously calculated.>
-Package marginnote Info: xpos seems to be 180.67499pt,
-(marginnote)             \marginnoteleftadjust ignored on input line 340.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 20.39996pt.
@@ -1514,6 +1496,17 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [9]
+Package marginnote Info: Margin note 10.1 is on absolute page 10
+(marginnote)              on input line 356.
+
+
+
+<QR code requested for "http://207.74.77.189/servicepics/" in version 0-M.>
+
+<Copying the QR code for "http://207.74.77.189/servicepics/" in version 3-M as 
+previously calculated.>
+Package marginnote Info: xpos seems to be 180.67499pt,
+(marginnote)             \marginnoteleftadjust ignored on input line 356.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 20.39996pt.
@@ -1521,7 +1514,21 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [10]
-Overfull \hbox (0.82608pt too wide) in paragraph at lines 420--421
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 20.39996pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[11]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 20.39996pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[12]
+Overfull \hbox (0.82608pt too wide) in paragraph at lines 436--437
 \T1/futs/m/n/10 Direct in-ter-ac-tion with com-mu-nity part-ners; of-ten in-clu
 des time spent out-side of school;
  []
@@ -1532,14 +1539,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[11]
-Overfull \hbox (2.9628pt too wide) in paragraph at lines 491--492
+[13]
+Overfull \hbox (2.9628pt too wide) in paragraph at lines 507--508
 \T1/futs/m/n/10 dents listed be-low each one. Stu-dents must com-plete the pa-p
 er-work be-fore switch-
  []
 
 
-Overfull \hbox (7.78943pt too wide) in paragraph at lines 493--494
+Overfull \hbox (7.78943pt too wide) in paragraph at lines 509--510
 []\T1/futs/m/n/10 Individual stu-dent out-reach ...Would be nice in a database 
 for-mat ac-cessed through
  []
@@ -1550,15 +1557,15 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[12]
+[14]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 20.39996pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[13]
-Overfull \hbox (1.36221pt too wide) in paragraph at lines 576--577
+[15]
+Overfull \hbox (1.36221pt too wide) in paragraph at lines 592--593
 []\T1/futs/m/n/10 Students may sub-mit their exam at any time dur-ing the cours
 e. A stu-dent may choose
  []
@@ -1569,26 +1576,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[14]
-Package marginnote Info: Margin note 15.1 is on absolute page 15
-(marginnote)              on input line 598.
-Package marginnote Info: xpos seems to be 72.26999pt,
-(marginnote)             \marginnoterightadjust ignored on input line 598.
-
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 20.39996pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[15]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 20.39996pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
 [16]
+Package marginnote Info: Margin note 17.1 is on absolute page 17
+(marginnote)              on input line 614.
+Package marginnote Info: xpos seems to be 72.26999pt,
+(marginnote)             \marginnoterightadjust ignored on input line 614.
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 20.39996pt.
@@ -1596,11 +1589,6 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [17]
-Overfull \hbox (4.96936pt too wide) in paragraph at lines 768--769
-[]\T1/futs/m/n/10 Enthusiasm, Pos-i-tive at-ti-tude, Ac-cept-ing re-spon-si-bil
--ity, Ea-ger-ness to learn new things,
- []
-
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 20.39996pt.
@@ -1614,17 +1602,36 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[19] (./Onabots-5534.aux
+[19]
+Overfull \hbox (4.96936pt too wide) in paragraph at lines 784--785
+[]\T1/futs/m/n/10 Enthusiasm, Pos-i-tive at-ti-tude, Ac-cept-ing re-spon-si-bil
+-ity, Ea-ger-ness to learn new things,
+ []
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 20.39996pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[20]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 20.39996pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[21] (./Onabots-5534.aux
 <Reading QR code for "http://207.74.77.189/servicepics/" at level 3-M from aux 
 file.>
 ) ) 
 Here is how much of TeX's memory you used:
  25054 strings out of 493068
- 462017 string characters out of 6137720
- 606451 words of memory out of 5000000
+ 462018 string characters out of 6137720
+ 606452 words of memory out of 5000000
  28723 multiletter control sequences out of 15000+600000
  71010 words of font info for 59 fonts, out of 8000000 for 9000
  1347 hyphenation exceptions out of 8191
  43i,12n,45p,10391b,888s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Onabots-5534.pdf (19 pages).
+Output written on Onabots-5534.pdf (21 pages).
