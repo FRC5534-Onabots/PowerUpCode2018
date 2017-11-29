@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (TeX Live 2016/Debian) (preloaded format=xelatex 2017.8.31)  28 NOV 2017 20:40
+This is XeTeX, Version 3.14159265-2.6-0.99996 (TeX Live 2016/Debian) (preloaded format=xelatex 2017.8.31)  28 NOV 2017 21:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1639,10 +1639,22 @@ Overfull \hbox (15.23282pt too wide) in paragraph at lines 7--8
 -ning De-bian GNU/Linux.
  []
 
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 22.
+
+Overfull \hbox (81.9198pt too wide) in paragraph at lines 27--36
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 27--36
+
+ []
+
 [3]
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <12> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 24.
-LaTeX Font Info:    Try loading font information for TS1+futs on input line 28.
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 40.
+LaTeX Font Info:    Try loading font information for TS1+futs on input line 43.
 
  (/usr/share/texlive/texmf-dist/tex/latex/fourier/ts1futs.fd
 File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
@@ -1653,10 +1665,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[4]
-LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 59.
-)
+[4])
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 20.39996pt.
@@ -1775,7 +1784,22 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[21] (../src/org/usfirst/frc/team5534/robot/Autonomous.java
+[21] (../src/org/usfirst/frc/team5534/robot/Autopilot.java
+Overfull \hbox (35.03667pt too wide) in paragraph at lines 8--9
+[][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (35.03667pt too wide) in paragraph at lines 18--19
+[][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (1.24443pt too wide) in paragraph at lines 28--29
+[][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
 Underfull \vbox (badness 5345) has occurred while \output is active []
 
 
@@ -1955,30 +1979,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 181--181
  []
 
 [43]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 20.39996pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[44]
 \tf@toc=\write5
 \openout5 = `Onabots-5534.toc'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 246.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 246.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 186.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 186.
  (./Onabots-5534.aux (./chapter/configure.aux) (./chapter/eclipse.aux))
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 246.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 246.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 246.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 186.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 186.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 186.
  ) 
 Here is how much of TeX's memory you used:
- 33802 strings out of 493068
- 590837 string characters out of 6137720
- 776119 words of memory out of 5000000
- 37316 multiletter control sequences out of 15000+600000
+ 33807 strings out of 493068
+ 591023 string characters out of 6137720
+ 774122 words of memory out of 5000000
+ 37320 multiletter control sequences out of 15000+600000
  91481 words of font info for 80 fonts, out of 8000000 for 9000
  1347 hyphenation exceptions out of 8191
  43i,12n,76p,10391b,2236s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Onabots-5534.pdf (44 pages).
+Output written on Onabots-5534.pdf (43 pages).

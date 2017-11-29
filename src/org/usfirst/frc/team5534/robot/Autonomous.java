@@ -75,7 +75,7 @@ public class Autonomous {
 		StageStartTime     = System.currentTimeMillis();
 		
 		// NEXT STAGE
-		StageNumber++;		
+		StageNumber++;
 	}
 	
 	

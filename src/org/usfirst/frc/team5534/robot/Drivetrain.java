@@ -40,36 +40,19 @@ public class Drivetrain {
 
 		PowerD = Math.max( PowerD, 0.18 );
 		PowerD += DriveSpeedError * 0.0001;
-		
-		double NewHeading = Navigation.GetHeading() + Vision.GetTargetX()/14;
-		double NextSpeed = Navigation.GetDelta( NewHeading ); 
-		
+
+		double NewHeading = Navigation.GetHeading() + Vision.GetTargetX() / 14;
+		double NextSpeed  = Navigation.GetDelta( NewHeading ); 
+
 		NextSpeed = Math.min( NextSpeed,  20 );
 		NextSpeed = Math.max( NextSpeed, -20 );
 
 		double SpeedError = NextSpeed - Navigation.GetTurnSpeed();
-		
+
 		PowerT += SpeedError * 0.0002;
 
 	}
 	
-	
-	public static void TurnToHeading( double TargetHeading ) {
-
-		double NextSpeed = Navigation.GetDelta( TargetHeading );
-
-			NextSpeed = Math.min( NextSpeed+5,  36 );
-			NextSpeed = Math.max( NextSpeed-5, -36 );
-
-		double SpeedError = NextSpeed - Navigation.GetTurnSpeed();
-
-		if ( NextSpeed < 0 ) { PowerT = Math.min( PowerT, -0.18 ); }
-		if ( NextSpeed > 0 ) { PowerT = Math.max( PowerT, +0.18 ); }
-		
-		PowerD = 0; PowerT += SpeedError*0.0002;
-
-	}
-
 	
 	public static void TurnToTarget() {
 		
@@ -83,6 +66,23 @@ public class Drivetrain {
 		
 	}
 			
+	
+	public static void TurnToHeading( double TargetHeading ) {
+
+		double NextSpeed = Navigation.GetDelta( TargetHeading );
+
+		NextSpeed = Math.min( NextSpeed+5,  36 );
+		NextSpeed = Math.max( NextSpeed-5, -36 );
+
+		double SpeedError = NextSpeed - Navigation.GetTurnSpeed();
+
+		if ( NextSpeed < 0 ) { PowerT = Math.min( PowerT, -0.18 ); }
+		if ( NextSpeed > 0 ) { PowerT = Math.max( PowerT, +0.18 ); }
+		
+		PowerD = 0; PowerT += SpeedError*0.0002;
+
+	}
+
 	
 	public static void DriveToHeading( double TargetSpeed, double TargetBearing) {
 

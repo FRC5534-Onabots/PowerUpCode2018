@@ -127,7 +127,7 @@ Include a program flow for each mode.
 \filelister{Autonomous.java}
 
 \newpage\section*{Autopilot.java}
-\filelister{Autonomous.java}
+\filelister{Autopilot.java}
 
 \newpage\section*{Button.java}
 \filelister{Button.java}
@@ -181,66 +181,6 @@ Include a program flow for each mode.
 \newpage\chapter{Java Tutorial}
 
 
-
-
-
-% \lstinputlisting[language=Java,basicstyle=\tiny]{../src/org/usfirst/frc/team5534/robot/Robot.java}
-
-%%
-%%
-%%
-\newpage
-\subsection*{Notes on Structure}
-
-\subsection*{Core Files}
-\begin{itemize}
-\item Robot.java
-
-\item Button.java
-\item Port.java
-
-\item Chooser
-\item Display
-
-\item ModeRobot \ldots Init() and Periodic()
-\item ModeAutonomous \ldots stub that determines which autonomous code to execute. Contains Init() and Periodic(). Calls correct autonmous mode
-\item ModeTeleop \ldots Init() and Periodic()
-\item ModeDisabled \ldots Optional. Contains Init() and Periodic()
-\item ModeTest \ldots Optional. Contains Init() and Periodic()
-
-\item AutonCenterStation
-\item AutonRightStation
-\item AutonLeftStation
-\item AutonCrossBaseline
-\item AutonDoNothing
-\item State
-
-\item Drivetrain \ldots moves the robot
-\item Navigation \ldots code for gyroscope, visiontracking, camera, range finders
-\item Odometer
-\item Visiontracking \ldots
-
-\item Autopilot \ldots read input from gyroscope, encoders, visiontracking, sonic rangers, etc. Includes code to make decisions based upon Navigation
-
-Some examples include. These are the things the robot must do on its own for movement
- DriveTowardSpring()
-
- TurnToBearing()
- 
- TurnLeft()
- 
- TurnRight()
-  
- TurnTowardSpring()
-
- DriveForward()
- 
- DriveReverse()
-
-\item Pilot \ldots reads input from joystick and buttons
-
-
-\end{itemize}
 
 
 \end{document}

@@ -3,9 +3,6 @@ package org.usfirst.frc.team5534.robot;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.I2C.Port;
-
 public class Chooser {
 
 	public static final String autonDoNothing     = "Do Nothing";
@@ -25,6 +22,8 @@ public class Chooser {
     	
     	double voltage = autonChooser.getVoltage() / 5.00 * 100;
     	
+    	voltage = 100;
+    	
     	if ( voltage < 10 ) { autonSelected = autonDoNothing;    }
     	
     	else if ( voltage < 30 ) { autonSelected = autonLeftStation;   }
@@ -36,8 +35,6 @@ public class Chooser {
     	else if ( voltage < 90 ) { autonSelected = autonCrossBaseline; }
     	
     	else { autonSelected = autonTesting; }
-    	
-    	SmartDashboard.putNumber("VOLTAGE",  autonChooser.getVoltage() );
     	
     }
     

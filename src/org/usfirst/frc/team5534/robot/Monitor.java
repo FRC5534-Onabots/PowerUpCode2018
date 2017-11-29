@@ -12,7 +12,7 @@ public class Monitor {
 	public static File        file        = new File("/home/lvuser/data.txt");
 	public static long        initialTime = 0;
 
-	
+
 	public static void Open() {
 		file.delete();
 		initialTime = System.currentTimeMillis();
@@ -27,11 +27,30 @@ public class Monitor {
 		}
 	}
 	
+	// TM	time
+	// LM	left motor power
+	// RM	right motor power
+	// RF	range finder
+	// B1	button 1
+	// B2	button 2
+	// B3	button 3
+	// B4	button 4
+	// B5	button 5
+	// B6	button 6
+	// JY	thrust
+	// JT	twist
+	// JX	turn
+	// TH	throttle
+	// CM	climb power
+	// RE	right encoder
+	// GH	gyroscope heading
+	// TX	target x
+	// TS	target score
 	
 	public static void Write() {
 		if ( pw != null ) {
-			// pw.print( (System.currentTimeMillis()-initialTime)/1000.0+" " );
-	
+			pw.print( (System.currentTimeMillis()-initialTime)/1000.0+" " );
+
 			pw.print( Navigation.GetRange()+" " );
 			pw.print( Vision.GetTargetX()+" " );
 			pw.print( Navigation.GetHeading()+" " );
