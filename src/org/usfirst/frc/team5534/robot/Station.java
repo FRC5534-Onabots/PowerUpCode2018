@@ -42,10 +42,6 @@ public class Station {
 			case 2:
 				Drivetrain.TurnToHeading( 90 );
 				break;
-			
-			case 3:
-//				Autopilot.DriveToSurface( 24, 12 );
-				break;
 				
 			default:
 				Autonomous.LastStage();

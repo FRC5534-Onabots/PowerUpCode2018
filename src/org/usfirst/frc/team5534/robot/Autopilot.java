@@ -54,7 +54,7 @@ public class Autopilot {
 //	}
 	
 	
-	public static void TurnToTarget( double tolerance ) {
+//	public static void TurnToTarget( double tolerance ) {
 
 		// How do we know if the target is in sight since we would
 		// never quit adjusting?
@@ -65,6 +65,6 @@ public class Autopilot {
 //		if () {
 //			Autonomous.StillWorking = true;
 //		} else { Drivetrain.Stop(); LastBearing = Navigation.GetHeading(); }
-	}
+//	}
 	
 }
