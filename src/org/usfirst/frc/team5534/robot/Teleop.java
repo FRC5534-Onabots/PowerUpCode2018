@@ -44,12 +44,14 @@ public class Teleop {
 		
 		if ( Pilot.GetButton(1) ) {
 			Navigation.Initialize();
+			Autopilot.LastBearing = 0;
+			Autonomous.StageNumber = 0;
 			Drivetrain.PowerD = 0;
 			Drivetrain.PowerT = 0;
 		}
 
 		else if ( Pilot.GetButton(2) ) {
-			Drivetrain.TurnToHeading( 180 );
+			Drivetrain.TurnToHeading( 60 );
 		}
 
 		else if ( Pilot.GetButton(3) ) {
@@ -61,7 +63,9 @@ public class Teleop {
 		}
 
 		else if ( Pilot.GetButton(5) ) {
-			
+			Autonomous.StillWorking = false;
+			Station.Testing();
+			if ( Autonomous.StillWorking == false ) { Autonomous.NextStage(); }
 		}
 		
 		else if ( Pilot.GetButton(6) ) {
@@ -72,11 +76,12 @@ public class Teleop {
 				Drivetrain.Stop();
 			}
 		}
+		
 
 		else {
 			Climber.Stop();
 			Drivetrain.PowerD = Pilot.GetThrust();
-			Drivetrain.PowerT = Pilot.GetTwist();
+			Drivetrain.PowerT = Pilot.GetTurn();
 		}
 
 	}

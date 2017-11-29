@@ -36,11 +36,21 @@ public class Station {
 				break;
 		
 			case 1:
-				Autopilot.DriveForwardToDistance(20, 18*12);
+				Autopilot.DriveForwardToDistance(36, 16*12);
 				break;
 
 			case 2:
-				Drivetrain.TurnToHeading( 90 );
+				Drivetrain.TurnToHeading( 60 );
+				Autonomous.WaitForDuration( 4 );
+				break;
+				
+			case 3:
+				Drivetrain.DriveToTarget( 32 );
+				if ( Navigation.GetRange() > 16 ) { Autonomous.StillWorking = true; }
+				break;
+				
+			case 4:
+				Drivetrain.Stop();
 				break;
 				
 			default:

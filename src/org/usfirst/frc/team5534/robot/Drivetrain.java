@@ -69,10 +69,12 @@ public class Drivetrain {
 	
 	public static void TurnToHeading( double TargetHeading ) {
 
+		Autopilot.LastBearing = TargetHeading;
+		
 		double NextSpeed = Navigation.GetDelta( TargetHeading );
 
-		NextSpeed = Math.min( NextSpeed+5,  36 );
-		NextSpeed = Math.max( NextSpeed-5, -36 );
+		NextSpeed = Math.min( NextSpeed,  36 );
+		NextSpeed = Math.max( NextSpeed, -36 );
 
 		double SpeedError = NextSpeed - Navigation.GetTurnSpeed();
 

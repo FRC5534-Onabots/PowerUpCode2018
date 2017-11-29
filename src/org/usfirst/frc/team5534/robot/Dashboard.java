@@ -29,8 +29,7 @@ public class Dashboard {
 		Double("Speed",    Navigation.GetDriveSpeed() );
 		Double("Distance", Navigation.GetDistance()   );
 
-		double testing = DashboardNetworkTable.getNumber("Testing");
-		Double("Testing", testing );
+		Double("Stage",    Autonomous.StageNumber     );
 		
 		// GYROSCOPE
 		Double("Heading",  Navigation.GetHeading()    );
