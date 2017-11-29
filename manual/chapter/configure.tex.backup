@@ -1,0 +1,94 @@
+\chapter{Software Configuration}
+
+Programming and running the Onabots Robot requires five components. Each of these components requires the installation of software and configuration. Wherever possible, free open-source software is used.
+
+\paragraph*{Coding Computer.}The Onabots use multiple computers running Debian GNU/Linux. Additional software includes OpenJDK 8, Eclipse with WPI plugins, Git, and ssh client. Due to changes in the radio firmware, code deployment is only possible through USB or Ethernet.
+
+\paragraph*{Driver Station.}A Windows computer is required to control the robot as well as configure the OpenMesh Radio and the RoboRIO.
+
+\paragraph*{OpenMesh Radio.}The radio may be configured for wireless control at home but is reconfigured at tournaments to be restricted to the field wireless system.
+
+\paragraph*{Raspberry PI.}This computer runs the Raspian OS, a Debian OS for the Raspberry PI. The only other software this computer uses is Python3 with OpenCV for vision processing.
+
+\paragraph*{RoboRIO.}This requires two pieces of software to be installed: firmware and Java 8. If the firmware is updated, Java 8 will need to be reinstalled.
+
+
+\newpage
+
+Five
+
+FRC 2018 Update Suite
+- remove previous
+- driver station
+- needs to be current
+
+
+
+
+Debian GNU/Linux 9
+
+Need Java using apt-get
+Eclipse using apt-get
+
+Java fron Oracle for Driver Station and RoboRIO
+
+
+
+Also recommend using a combination of Git server and GitHub for public code sharing.
+
+I recommend keeping all documentation, vision code, and robot code in the same repository.
+
+\begin{enumerate}[label=$\square$]
+\item Git client
+\item Git server
+\item GitHub
+\end{enumerate}
+
+
+
+\newpage\section*{Coding Computer}
+
+
+
+
+
+
+\newpage\section*{OpenMesh Radio}
+
+\begin{itemize}
+\item Label radio with team number and year with piece of masking tape. This is needed at tournaments when the field judges configure the radio. Keep a radio configured for home use so that it does not have to be reconfigured. This also allows us to use the robot wirelessly during practice. Indicate whether this is the tournament or home radio.
+
+\item Configure the radio. This may need to be check later to see if there is a more up-to-date version. Note that `IL' represents a version used in Israel.
+
+\item Radio is powered by the VRM 12V/2A port. Strip 5/16 inn from wires.
+
+\item For power, the center of the barrel is positive. Red should be connected to the center. Black is for the outside.
+\end{itemize}
+
+
+\subsection*{Firmware}
+
+Must be performed using a Windows computer.
+
+\begin{enumerate}
+\item Disable WiFi on Control Panel
+
+\item Open FRC Radio Configuration Utility from desktop
+
+\item Select Ethernet as network interface
+
+\item Enter team number (e.g., 5534)
+
+\item Make sure the radio is on OpenMesh
+
+\item Press `Load Firmware'
+
+\item Follow on-screen directions pertaining to power cycling
+
+\item After the firmware is loaded, wait for about 2 minutes until the power light has stopped flashing for about a minute.
+
+\item Press `Configure'
+
+\item Done
+\end{enumerate}
+

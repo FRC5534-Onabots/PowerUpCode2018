@@ -1,0 +1,2775 @@
+\documentclass[letterpaper,10pt]{memoir}
+
+	\include{include/packages}
+
+	\newcommand{\filelister}[1]{%
+		\lstinputlisting[language=Java, basicstyle=\small, numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt]{../src/org/usfirst/frc/team5534/robot/#1}
+	}
+	
+	% \tiny 	sample text
+	% \scriptsize 	sample text
+	% \footnotesize 	sample text
+	% \small 	sample text
+	% \normalsize 	sample text
+	
+% 	\include{commands}
+
+
+%%
+%%	DOCUMENT
+%%
+\begin{document}
+
+\chapter{Components}
+
+\begin{itemize}
+\item Motor Controller
+\item Encoder
+\item Range Finder
+\item Camera
+\item Power Distribution Panel
+\item RoboRIO
+\item Pneumatics Control Module
+\item Voltage Regulator Module
+\end{itemize}
+
+
+%%
+%% ROBORIO
+%%
+\newpage\section*{RoboRIO}
+
+Some information about the RoboRIO.
+
+\includegraphics[width=\textwidth]{images/ni_roborio}
+
+Include information about the various ports, their naming.
+
+INPUT Power for RoboRIO. Do not use screws facing top, these hold the black plastic to the RoboRIO. Screws to tighten wires are found on the left side of the black plastic.
+
+Another picture showing the labelled parts of the roborio would be good.
+
+
+%%
+%%	MOTOR CONTROLLERS
+%%
+\newpage\section*{Motor Controllers}
+
+\includegraphics[width=.25\textwidth]{images/spark}
+
+Different types of motor controllers. List the different kinds as well as advantages and disadvantages of each. Include links to AndyMark with prices and descriptions.
+
+A motor controller can control more than one motor but need a PWM split cable.
+
+Talk about PWM, as Pulse Width Modulated. Varies the amount of time that a voltage is applied to the motor.
+
+Range of motor controller values: \num{-1} to \num{1} with \num{0} indicating no motion.
+
+Actually good to set motor speed from an encoder instead of motor power. Speed changes with friction, internal resistance, and battery voltage.
+
+Wiring requirements, what size gauge is needed?
+
+Braking vs Coast mode
+
+
+%%
+%%	RADIO
+%%
+\newpage\section*{Radio}
+
+
+
+
+
+%%
+%%	ENCODERS
+%%
+\newpage\section*{Encoders}
+
+Encoders should be used anywhere you need to control motor speed.
+
+
+
+
+At the beginning of each of these files include the purpose and constraints for code that must exist there.
+
+Include a program flow for each mode.
+
+%%
+%%
+%%
+\newpage
+\subsection*{Installing Eclipse}
+
+Steps to follow. Include pictures and possibly links to video.
+
+\begin{itemize}
+	\item Download and Install Java 8 from Oracle web site: \url{}
+	\item Download and Install Ecilpse for following site: \url{}
+	\item Install WPI plugin
+	\item Configure Eclipse
+	\item Firmware in roboRio
+	\item Configure access points
+	\item Update firmware (see yellow paper, Not IS - that is for Israeli teams)
+	\item Vision tracking set-up with RaspberryPI
+\end{itemize}
+
+
+
+%%
+%%	ROBOT CODE
+%%
+\newpage\chapter{Robot Code}
+
+%%
+%%
+%%
+\newpage\section*{Robot.java}
+\filelister{Robot.java}
+
+
+\newpage\section*{Autonomous.java}
+\filelister{Autonomous.java}
+
+
+
+% \lstinputlisting[language=Java,basicstyle=\tiny]{../src/org/usfirst/frc/team5534/robot/Robot.java}
+
+%%
+%%
+%%
+\newpage
+\subsection*{Notes on Structure}
+
+\subsection*{Core Files}
+\begin{itemize}
+\item Robot.java
+
+\item Button.java
+\item Port.java
+
+\item Chooser
+\item Display
+
+\item ModeRobot \ldots Init() and Periodic()
+\item ModeAutonomous \ldots stub that determines which autonomous code to execute. Contains Init() and Periodic(). Calls correct autonmous mode
+\item ModeTeleop \ldots Init() and Periodic()
+\item ModeDisabled \ldots Optional. Contains Init() and Periodic()
+\item ModeTest \ldots Optional. Contains Init() and Periodic()
+
+\item AutonCenterStation
+\item AutonRightStation
+\item AutonLeftStation
+\item AutonCrossBaseline
+\item AutonDoNothing
+\item State
+
+\item Drivetrain \ldots moves the robot
+\item Navigation \ldots code for gyroscope, visiontracking, camera, range finders
+\item Odometer
+\item Visiontracking \ldots
+
+\item Autopilot \ldots read input from gyroscope, encoders, visiontracking, sonic rangers, etc. Includes code to make decisions based upon Navigation
+
+Some examples include. These are the things the robot must do on its own for movement
+ DriveTowardSpring()
+
+ TurnToBearing()
+ 
+ TurnLeft()
+ 
+ TurnRight()
+  
+ TurnTowardSpring()
+
+ DriveForward()
+ 
+ DriveReverse()
+
+\item Pilot \ldots reads input from joystick and buttons
+
+
+\end{itemize}
+
+
+
+%%
+%%
+%%
+\newpage
+\subsection*{Robot.java}
+
+\begin{lstlisting}[language=Java]
+package org.usfirst.frc.team5534.robot;
+
+import edu.wpi.first.wpilibj.IterativeRobot;
+
+public class Robot extends IterativeRobot {
+
+	@Override
+	public void robotInit() {
+		ModeRobot.Init();
+	}
+
+	@Override
+	public void robotPeriodic() {
+		ModeRobot.Periodic();
+	}
+	
+	@Override
+	public void autonomousInit() {
+		ModeAutonomous.Init();
+	}
+
+	@Override
+	public void autonomousPeriodic() {
+		ModeAutonomous.Periodic();
+	}
+
+	@Override
+	public void teleopInit() {
+		ModeTeleop.Init();
+	}
+	
+	@Override
+	public void teleopPeriodic() {
+		ModeTeleop.Periodic();
+	}
+	
+	@Override
+	public void disabledInit() {
+		ModeDisabled.Init();
+	}
+	
+	@Override
+	public void disabledPeriodic() {
+		ModeDisabled.Periodic();
+	}
+	
+	@Override
+	public void testInit() {
+		ModeTest.Init();
+	}
+	
+	@Override
+	public void testPeriodic() {
+		ModeTest.Periodic();
+	}
+\end{lstlisting}
+
+
+
+%%
+%%
+%%
+\newpage
+\subsection*{Buttons.java}
+
+\begin{lstlisting}[language=Java]
+package org.usfirst.frc.team5534.robot;
+
+public class Ports {
+
+	public final static int Climber = 1;
+
+	public final static int Shooter = 2;
+
+	public final static int GearGrab = 3;
+
+	public final static int GearDrop = 4;
+	
+	public final static int GearRaise = 5;
+	
+	public final static int GearLower = 6;
+
+}
+\end{lstlisting}
+
+
+
+%%
+%%
+%%
+\newpage
+\subsection*{Ports.java}
+
+\begin{lstlisting}[language=Java]
+package org.usfirst.frc.team5534.robot;
+
+public class Ports {
+
+	public final static int USB_driveStick = 1;
+
+
+	public final static int PWM_motorLF = 1;
+	public final static int PWM_motorLR = 2;
+	public final static int PWM_motorRF = 3;
+	public final static int PWM_motorRR = 4;
+
+	public final static int[] PWM_gearLifter  = { 5, 6 };
+	public final static int[] PWM_gearGrabber = { 7, 8 };
+
+	public final static int PWM_motorClimber = 9;
+	public final static int PWM_motorShooter = 10;
+	public final static int PWM_motorMixer   = 11;
+
+	public final static int[] PWM_encoderL = { 12, 13 };
+	public final static int[] PWM_encoderR = { 14, 15 };
+
+	public final static int[] PWM_encoderC = { 16, 17 };
+
+	public final static int[] PWM_encoderS = { 18, 19 };
+
+}
+
+\end{lstlisting}
+
+
+
+%%
+%%
+%%
+\newpage
+\subsection*{ModeTeleop.java}
+
+\begin{lstlisting}[language=Java]
+package org.usfirst.frc.team5534.robot;
+
+public class ModeTeleop {
+
+}
+
+\end{lstlisting}
+
+
+
+%%
+%%
+%%
+\newpage
+\subsection*{Drivetrain.java}
+
+\begin{lstlisting}[language=Java]
+package org.usfirst.frc.team5534.robot;
+
+import edu.wpi.first.wpilibj.Spark;
+
+public class Drivetrain {
+
+	// DEFINE MOTORS
+	public static Spark motorLF = new Spark( Ports.PWM_motorLF );
+	public static Spark motorLR = new Spark( Ports.PWM_motorLR );
+	public static Spark motorRF = new Spark( Ports.PWM_motorRF );
+	public static Spark motorRR = new Spark( Ports.PWM_motorRR );
+	
+	
+	// CAPABILITIES
+	public static void Drive( double power, double turn ) {
+		
+		double lPower = power + turn;
+		double rPower = power + turn;
+		
+		motorLF.set( lPower );
+		motorLR.set( lPower );
+		
+		motorRF.set( rPower );
+		motorRR.set( rPower );
+
+	}
+
+	
+	public static void Stop() {
+		Drive( 0.00, 0.00 );
+	}
+
+}
+
+\end{lstlisting}
+
+
+
+% \include{miscellaneous/title-page}
+
+
+% \include{miscellaneous/principles}
+
+\raggedbottom
+
+%%
+%%	DESCRIPTION
+%%
+% \chapterstyle{madsen}
+\chapter{Assessment and Evaluation}
+
+\section*{Calculaion}
+
+\marginpar{This is a margin x x x x x x x paragraph. It contains a smaller font and is obviously found in the margin of the page on which it is placed.}
+
+The course grade is the average of each quarter grade from a combination of project maintenance; education and outreach; and exam grades.
+%
+Each quarter grade is the ratio of points earned to points possible.
+%
+Grades restart at the beginning of each quarter.
+%
+The semester grade is reduced by \SI{0.5}{\percent} for every absence and tardy.  In addition, negative behavior can result in a similar reduction and possibly reassignment to another project.
+%
+The approximate weight of each category is shown below.
+
+	\vspace*{5mm}
+	\begin{center}
+	{%
+		\renewcommand{\arraystretch}{1.35}
+		\noindent
+		\begin{tabular}{ l c l S }
+		Category						&	Weight	&	Frequency	&	{Points\textsuperscript{1}}	\\
+		\midrule
+		Project Maintenance		&	\SI{40}{\percent} &	Weekly		&	\num{5.0}	\\
+		Education and Outreach	&	\SI{40}{\percent}	&	Biweekly 	&	\num{5.0}	\\
+		Midterm and Final Exam	&	\SI{20}{\percent}	&	Quarterly	&	\num{2.5}	\\
+		\end{tabular}
+	}
+	\end{center}
+	\vspace*{5mm}
+	
+	\noindent
+	This shows the number of points for each day of class.
+	%
+	Combined, the exams are worth twenty percent of the semester grade.
+	%
+	
+	
+	
+	\vspace*{5mm}
+
+\noindent
+
+
+\section*{Rubric}
+
+Most grades are determined holistically.
+%
+Points are assigned from the points possible and the letter (quality grade) using the scale shown.
+
+	\begin{center}
+	{%
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{ l l c }
+		Letter & Description	&	Percent	\\
+		\midrule
+		A & Excellent		&	100	\\
+		B & Good				&   85	\\
+		C & Average			&   75	\\
+		D & Minimal			&   65	\\
+		F & Unacceptable	&    0	\\
+	\end{tabular}
+	}%
+	\end{center}
+
+
+\section*{Review}
+Students may request a review of their grade by submitting supporting evidence no more than one week after the due date. Evidence must usually be submitted in writing. This allows consideration of extenuating circumsances. Project maintenance grades will be entered the following Wednesday.
+
+\section*{Failing}
+Students whose semester grade is D or F are given an explicit opportunity to raise their grade through suggestions and opportunities. These students will be subject to a weekly or biweekly review and have parent communication by mail, e-mail, or phone.
+
+Students will not fail the class due to attendance. In other words, attendance and behavior will not reduce a passing grade below 60\%.
+
+
+
+
+
+
+\newpage
+\section*{Course Description}
+
+
+\textit{The Service Learning course at Onaway High School 
+ provides meaningful experiences
+ that reinforce learning
+ by connecting students with their local community.}
+
+\vspace*{3mm}
+ 
+Include some good pictures of students from the different project areas. Include a goal from each area as well as the general tasks and projects.
+
+\vspace*{2cm}
+
+\noindent
+What this means and how the class works. What do the students do and what are their roles.
+
+The way this works:
+
+	student selects an existing project to maintain and develop requiring about 
+  \SIrange{20}{30}{\minute} per day, 
+
+  student uses remaining time for education and outreach (see explanation).
+
+  
+  
+
+%%
+%% HISTORY
+%%
+\newpage
+\section*{History}
+
+
+%% This is almost a side-note that can be used to emphasize the nature of the 
+%% course.
+Course originated in \textbf{YEAR} when the guidance counselor approached me about
+providing an additional science class for the following year. At the time I was
+looking into Advanced Placement courses and came across an A.P. Environmental
+Studies class. I also spoke with the new elementary principal who was part of the GLSI Network when she was a teacher. Through GLSI she had received a \$5,000 grant. Combined with a Learn and Serve grant for \$6,000 she had intended to build a school greenhouse. Previous teachers had tried to start school recycling programs at various times but limited class time made this difficult to sustain.
+
+The result of these conversations was a class called Service Learning that was project driven in four areas: Animals and Habitat, Fisheries and Water, Plants and Forestry, and Recycling and Energy.
+
+
+%% This is also something of a side note that describes what I have learned
+%% while teaching the course.
+\section*{Realizations}
+\begin{itemize}
+\item Everything takes longer than expected.
+\item Many community partners exists in our community,
+\item Projects rarely turn out as expected,
+\item Be adaptable and ready for change,
+\item Students become possesive of their projects
+\end{itemize}
+
+\section*{Sample Projects -- Successful}
+\begin{itemize}
+\item Fossil park (USFW)
+\item Hydroponic Lettuce (B. Moore)
+\item Lake Trout (USFW, Trout Unlimited)
+\item Salmon in the Classroom (HBAAA, DNR)
+\item School Forest Management Plan (Martell, DNR)
+\item School Greenhouse (GLSI, Garden Club)
+\item School-wide recycling program (Emmet County Transfer Station)
+\item Solar panels and wind turbine (GLEE Program)
+\item Sturgeon on Loan (DNR, SFT)
+\end{itemize}
+
+ 
+
+%%
+%%	GRADE OVERVIEW
+%%
+\newpage
+	
+
+A	Excellent
+all tasks are completed
+required outreach completed on time
+data collected accurately
+data reported
+area tasks completed
+task sheet submitted complete and accurate
+
+
+B	Good
+all tasks completed
+data collected accurately
+data reported
+most area tasks completed
+
+
+C Average
+some required tasks have not been completed
+
+
+
+%%
+%%	ASSESSMENT
+%%
+\newpage
+\section*{Assessment and Evaluation}
+
+
+	\subsection*{Service Projects \hfill 40\%}
+
+	Graded weekly.	Five points per day of class, whether it is a half-day or a full-day of class.
+
+	Students may work in teams (of up to two beginning Winter 2018). Groups of three were permissible earlier.
+
+	Some outreach related to a project is required and may impact Service grade if not completed.
+
+	See Service Project Areas for ongoing and transient projects.
+
+	Consider rotating manager responsibilities (track assignments in group in case of absences)
+	
+	Should include tracking of data.
+
+	Project maintenance grading is based upon the Area. For example, all students in the Animals and Habitat group receive the same project grade.
+
+
+	\subsection*{Education and Outreach \hfill 40\%}
+
+	Student selected activites.
+
+	Graded bi-weekly. Five points for full day of class, nothing for a half-day of class.
+
+	Graded based upon submitted student form of what they did: electronic or paper
+	
+	See Education and Outreach categories for guidelines.
+
+
+	\subsection*{Presentations \hfill 20\%}
+
+	Consists of a midterm and a final.
+	
+	Weight is 2.5 points per full day of class. Half days do not contribute.
+
+	Midterm is a research project related to the class. Grade is based upon presentation format: Video (A or B); Powerpoint or Prezi (B or C); Written paper or display (C or D).
+
+
+
+	\begin{itemize}
+	\item Rubrics used for each item (see next page)
+	\item Students work in teams of their choice of up to 2. Additional students reduce amount for all or part of a pair
+	\item Students submit their own outreach points on a form, due on following Monday up to Wednesday
+	\item Outreach points are assigned based upon evidence, importance of activity.
+	\item Q1 exam is research, Q2 exam is reflection
+	\item Two kinds of required outreach: project and general.
+	\end{itemize}
+
+
+
+	\vspace*{1cm}
+
+
+	
+%%
+%%	PROJECTS
+%%	
+\newpage
+\section*{Project Maintenance}
+
+Project Maintenance
+- students may work alone or with one partner on a project
+- graded weekly and holistically on a A--F scale, overall progress on day
+- anticipate about 25--30 minutes of work each days
+- involves
+	-	data collection and reporting
+	-	inspections about twice a week or more
+	-	fixing issues indicated previously
+	-	each area should have a project manager
+			manager signs off on tasks confirming they were done correctly and fully
+	-	general maintenance and recording of data, reporting of data timely manner
+	-	required outreach is part of each group
+	-	daily schedule of student accomplishments
+	-	students may appeal grade with justification (in writing)
+	-	data turned in weekly, grades may be updated through following Wednesday (or so)
+	-	how is data submitted
+	-	students may resubmit project once a week
+
+
+\newpage
+Outreach points are updated every two weeks
+
+\subsubsection*{Levels}
+There are five levels or Education and Outreach with varying amounts of points. The maximum number
+of points may be increased by 20\% for events that happen outside of the school day.
+
+\subsubsection*{5 -- Major \hfill 2 weeks}
+These activities are very important for the class. 
+
+
+
+\subsubsection*{Required}
+\begin{itemize}[nosep]
+\item 
+\end{itemize}
+
+\subsubsection*{Optional}
+\begin{itemize}[nosep]
+\item Informational signs
+\end{itemize}
+
+
+
+
+Areas (24 students)
+- Animals and Habitat	(4)
+- Fisheries and Water	(8)
+- Plants and Forestry	(8)
+- Recycling and Energy	(6)
+- Technology and Data	(-)
+
+Students receive an overall grade each week on their area from:
+- Inspection	0--4		A--F
+- Data			0--4		A--F
+
+Absences and tardies reduce the overall grade: 0.5\% per absence and 0.25\% per tardy. This amounts to about 5.66 points for any absence. During an absence of a team, another group will be required to step
+up and complete required tasks. This earns additional points for those involved. There is a list of
+substitutes. First choice given to those with the fewest points.
+
+Options
+- Advistory meeting input
+	provides useful input (A--F), 5 points
+
+
+
+
+
+
+\subsection*{Service Projects}
+
+\marginnote{\noindent\qrcode[height=0.8in]{http://207.74.77.189/servicepics/}}
+
+% \noindent Student-selected groups perform routine maintenance, collect and analyze data, present information, and communicate with others. Grades are assigned once a week based on project inspections, paperwork submission, and required education and outreach. Students not involved in a project may earn points through additional education and outreach. Service projects are expected to take 20--30 minutes each day.
+
+\begin{itemize}[label=$-$,nosep]
+\item New or existing projects, may be in different areas
+\item Students select teams and projects
+\item Teams earn points divided equally among members
+\item Students track what they do each week and write a summary report
+\item Part of the project grade is maintenance (4), data (2), summary (4)
+\item Weekly group grade based upon project
+\item Some tasks rotate among groups (recycling? cardboard? cleaning room, counters?)
+\item Expect 20--30 minutes per day
+\item Collect and analyze data, present information, communicate with others
+\item Option for no project -- new project or strictly outreach
+\item One or more inspections per week
+\item Some projects have required outreach
+\item 40\% of final grade
+\item project set-up and break down at beginning and end
+\end{itemize}
+
+
+\subsection*{Education and Outreach}
+
+\begin{itemize}[label=$-$,nosep]
+\item Tasks based upon time required and accomplishment (i.e., levels)
+\item 40\% of final grade
+\item Student submits points weekly or biweekly
+\item Tracked using online system
+\item Target points per week (e.g., 5 points per day)
+\item Required videos, quizzes, etc. for each area
+\end{itemize}
+
+
+\subsection*{Research and Reflection}
+
+\begin{itemize}[label=$-$,nosep]
+\item Midterm is a research project
+\item Final is a student reflection
+\item Format determines base points: Video (B), Presentation (C), Paper (D)
+\item Identify requirements: length, content, points
+\item Must relate to studied topic in class
+\item Video should be 2--3 minute
+\item Presentation should be 2--3 minutes and recorded
+\item Paper should be 500--750 words; minimum of one paragraph per topic; no length requirement
+\item soft skill area (5), impact on community, community parners, event or activities
+\item student provides evidence of each item in reflection
+\item ideal goal is to make video apply to NOAA International Film Contest
+\end{itemize}
+
+
+
+% \paragraph*{\it Midterm Exam: Research Project (10\%).}
+% The midterm exam is an individual research project on a topic related to North-East Michigan. Examples include a how-to video on accomplishing a tasks, a hydroponics informational display, a paper on an animal, organization, or natural feature.
+
+% \paragraph*{\it Final Exam: Student Reflection (10\%).}
+% The final exam is a reflection over the semester about experiences, soft skills, local  impact, and community partners. Earned points are determined from the quality and format.
+
+
+\newpage
+\section*{Service Projects}
+
+Purpose of service projects.
+
+General requirements of a project.
+select a project,
+perform maintenance,
+required outreach,
+complete form weekly,
+
+
+
+\newpage
+
+{\rightskip 0in
+\section*{Education and Outreach}
+
+Actual grade is based upon participation and submitted evidence. At a minimum, every item should include the date and a short description. For level 3 and above, there must be a detailed explanation to receive full credit. An additional \SI{20}{\percent} may be awarded for very important events.
+
+\subsection*{Level 5 \hfill 40 points}
+
+	Direct interaction with community partners; often includes time spent outside of school; requires some sort of presentation; roughly 5 hours or 2 weeks.
+
+	\begin{multicols}{3}\begin{itemize}[label=$-$,itemsep=0mm]
+	\item Earth Day event
+	\item Fossil park
+	\item Plant sale
+	\item Shivaree booth
+	\item Sturgeon guard
+	\item Producing a video
+	\item Vernal pool
+	\item Watershed academy
+	\end{itemize}\end{multicols}
+
+\subsection*{Level 4 \hfill 20 points}
+
+	May involve direct interaction with community partners or outside the classroom; about one week or 2.5 hours.
+
+	\begin{multicols}{3}\begin{itemize}[label=$-$,itemsep=0mm]
+	\item Arrange major trip
+	\item Partner meeting
+	\item Grant application
+	\item Major display
+	\item Bulletin board
+	\item Major fund-raiser
+	\item Major research
+	\item Presenting a lesson
+	\item Information to media
+	\end{itemize}\end{multicols}
+
+\subsection*{Level 3 \hfill 10 points}
+
+	These are bigger experiences but may not take a large amount of time to complete. These can be document communication with a community parter
+
+	\begin{multicols}{3}\begin{itemize}[label=$-$,itemsep=0mm]
+	\item Advisory meeting
+	\item Arrange minor trip
+	\item Load trailer
+	\item Minor display
+	\item Informal tour
+	\item Update partner
+	\item Volunteer event
+	\end{itemize}\end{multicols}
+
+\subsection*{Level 2 \hfill 5 points}
+
+	Physical activities that take no more than \SI{30}{min}. This includes water monitoring even though it requires some paperwork.
+
+	\begin{multicols}{3}\begin{itemize}[label=$-$,itemsep=0mm]
+	\item Class improvement
+	\item General labor
+	\item Project mentor
+	\item Tour (individual)
+	\item Water monitoring
+	\end{itemize}\end{multicols}
+
+\subsection*{Level 1 \hfill 2 points}
+
+	Quick maintenance activities that are expected to take no more than ten minutes. These activities do not require any sort of documentation.
+
+	\begin{multicols}{3}\begin{itemize}[label=$-$,itemsep=0mm]
+	\item Before school
+	\item Dual enrollment
+	\item After school
+	\end{itemize}\end{multicols}
+
+}
+
+\newpage
+\section*{List of Forms}
+
+\begin{itemize}[label=$-$]
+	\item List of student project assignments \ldots Shows the individual projects with the students listed below each one. Students must complete the paperwork before switching groups. Students who are in more than one area may receive the average of the two areas.
+
+	\item Individual student outreach \ldots Would be nice in a database format accessed through a web page.
+
+	\item Project team application \ldots This is the official document stating assigned projects. Students are expected to work in this project area until a transfer is approved.
+	
+	\item Fisheries forms. This includes information on a half-sheet of paper such as ammonia, nitrite, nitrate, pH, dissolved oxygen, temperature, salinity, filters, water changes, mortality, and observations. Individual projects may use an alternate form. There should also be a calendar for each project that identifies important dates: reception of fish, mortality, water changes, etc.
+	
+	\item Animals forms. Includes feeding, bedding change, water change, and observations.
+	
+	\item Plants forms. Hydroponics: seeds planted, seeds moved, This might be something for each seed cohort.
+	
+	\item Recycling forms. Collection each day and summary of events. Keep a calendar of the loading, trips, students attending, and so on. Consider giving everyone planner-type pages to track their data.
+\end{itemize}
+
+
+\newpage
+\section*{Education and Outreach}
+
+This page is a list of the Education and Outreach supplied by students. This information is transferred to a database drive web site which performs calculations for a weekly grade. Printed reports can be generated as needed.
+
+
+
+\newpage
+\section*{Assessment and Evaluation}
+
+Based upon letter grades converted to percentages through Powerschool. Example as an `A' is worth \SI{96.5}{\percent} which is half-way between 93 and 100.
+
+
+
+
+\subsection*{Education and Outreach}
+%
+Points are assigned to individuals.
+%
+Students submit log of points weekly. Long-term projects are to be broken into smaller.
+%
+Points based upon level, details, and participation. See rubric of A--F.
+
+\vspace*{3mm}
+
+
+{\renewcommand{\arraystretch}{1.35}
+\noindent\begin{tabular}{ l c l p{3in} }
+
+	\midrule
+
+	Excellent & A & 100\% & Date and time, Description and purpose, Partners, organization, and titles \\
+
+	Good & B & 85\% & Date and time, Description and purpose (one brief), Partners \\
+
+	Fair & C & 75\% & Date and time, Description or purpose (both brief), Partners (partial) \\ 
+
+	Poor & D & 65\% & Date (only), topic (brief), Partners (vague) \\
+
+	Minimal & F & 30\% & Date (only), topic (vague) \\
+\end{tabular}}
+
+\vspace*{3mm}
+
+\noindent
+{\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{ l c c c c c c c }
+	&&& Level 1 & Level 2 & Level 3 & Level 4 & Level 5 \\[-1mm]
+	&&& (2 pts) & (5 pts) & (10 pts) & (25 pts) & (50 pts) \\
+	\midrule
+	Excellent & A & 100\% & 2.00 &  5.00 & 10.00 & 25.00 & 50.00 \\
+	Good      & B &  85\% & 1.70 &  4.25 &  8.50 & 21.25 & 42.50 \\
+	Fair      & C &  75\% & 1.50 &  3.75 &  7.50 & 18.75 & 37.50 \\
+	Poor      & D &  65\% & 1.30 &  3.25 &  6.50 & 16.25 & 32.50 \\
+	Minimal   & F &  30\% & 0.60 &  1.50 &  3.00 &  7.50 & 15.00 \\
+\end{tabular}}
+
+
+%
+
+
+\subsection*{Midterm and Final Exams}
+%
+Midterm is a research project. Student format choice determines the maximum 
+
+Midterm exam is a research project. Format and quality determines earned points. Video (A), Presentation (B), Written paper (C), list given to teacher (D).
+
+Grades will typically be adjusted one letter up or down based upon quality and contribution to future classes.
+
+Students may submit their exam at any time during the course. A student may choose to apply a particular video to their midterm instead of regular Education and Outreach.
+
+{\renewcommand{\arraystretch}{1.35}
+\noindent\begin{tabular}{ @{} l c l p{3in} }
+
+	Excellent & A & 100\% & \\
+
+	Good & B & 85\% & Video \\
+
+	Fair & C & 75\% & Presentation \\ 
+
+	Poor & D & 65\% & Paper \\
+
+	Minimal & F & 30\% & \\
+\end{tabular}}
+
+
+\newpage
+\section*{Continuing and Temporary Projects}
+%
+\marginnote{Each project requires following protocols, collecting and analyzing data, creating signs and displays, performing daily maintenance, taking pictures, assembling videos, keeping and inventory, cleaning and organizing, and participating in team meetings. }
+%
+\noindent Each area has an established set of projects that students may join as well as temporary projects that have limited duration. Each projects has daily, weekly, and monthly tasks as well as required Education and Outreach opportunities.
+
+\subsection*{Animals and Habitat}
+
+Maintenance in the Animals and Habitat group primarily consists of feeding animals, cleaning cages, as well as task required of all projects.
+
+\begin{multicols}{2}\begin{itemize}[label=$-$,parsep=0pt]
+\item Green snake
+\item Hedgehogs
+\item Mice
+\item Tarantula
+\end{itemize}
+\end{multicols}
+
+
+\subsection*{Fisheries and Water}
+%
+\noindent Fisheries projects involve feeding fish and turtles, performing water changes, and testing water quality.
+
+\begin{multicols}{2}
+\begin{itemize}[label=$-$,parsep=0pt]
+\item Chinook salmon (Nov--May)
+\item Goldfish
+\item Lake sturgeon (Oct--May)
+\item Lake trout
+\item Marine tank
+\item Sea Lamprey (May--Jun)
+\item Turtles
+\end{itemize}
+\end{multicols}
+
+
+\subsection*{Plants and Forestry}
+
+Plant-related projects require planting seeds, watering, and adding fertilizer.
+
+\begin{multicols}{2}
+\begin{itemize}[label=$-$,parsep=0pt]
+\item Apple Orchard
+\item Aquaculture
+\item Flood table
+\item Hydroponic lettuce
+\item Raingarden
+\item School forest
+\item Schoolyard habitat
+\end{itemize}
+\end{multicols}
+
+
+\subsection*{Recycling and Energy}
+
+Recycling involves collecting and sorting materials. Six times a year materials are loaded onto a trailer and delivered to the Emmet County Transfer Station.
+
+\begin{multicols}{2}
+\begin{itemize}[label=$-$,parsep=0pt]
+\item Cardboard
+\item Central
+\item Elementary
+\item Secondary
+\end{itemize}
+\end{multicols}
+
+
+\subsection*{Miscellaneous}
+
+Students may develop a project that might not fit into an established category. These are generally short-term projects.
+
+\begin{multicols}{2}
+\begin{itemize}[label=$-$,parsep=0pt]
+\item Bottle filling station
+\item Fossil park
+\item Fund-raisers
+\end{itemize}
+\end{multicols}
+
+
+\newpage
+%%
+%%	COMPUTER SCIENCE
+%%
+\section*{Tuesday, September 5, 2017 \hfill Day 1}
+
+	Began class by surveying student interest and background related to computers. Only one student had experience with replacing hardware although several were able to replace mice and keyboards. A majority of students would like to learn some sort of programming. There were some students who took the class for something different.
+
+	We looked at the outside of the case and noticed the number of USB ports for mice and keyboards.  Next involved students removing, observing, and replacing hardware. Students took a harddrive, placed it in a tray, and inserted it into the tower. Students then connected power and data cables. Students also removed memory chips and replaced.
+
+	After hardware we moved on to booting up a vanilla Debian Stretch system. This system has no graphical interface and very little in the way of system software. Students logged in as root, created a new user using adduser, and then logged in as that user. At this point, we were past 9:15am  and several in the class went for grab-and-go breakfast.
+
+	NB: Ashlee Crusoe is on vacation from September 6 for about a week.
+
+
+%%
+%%
+%%
+\section*{Wednesday, September 6, 2017 \hfill Day 2}
+
+	\paragraph*{Goals.}Goals for the second day of class include becoming familar with the command shell. Students should be able to use the following commands: echo, adduser, passwd, cd, ls, mkdir, rmdir, man, passwd, logout, and nano. We will use a simple editor (nano) to create a file, change the executable bit, and execute the script. Demonstrated use of the commands until 8:45. Students implemented commands until 9:15 and then were released for breakfast.
+
+	NB: Madison Brilley and Maggie Jones dropped. Chelsea Brewbaker and Garret Roat added.
+
+
+%%
+%%
+%%
+\section*{Thursday, September 7, 2017 \hfill Day 3}
+
+	\paragraph{Goals.}Install software. Note that only root (the administrator) can install software. Begin by installing something simple and eventually kde-full. Also give students the option of gnome, firefox, etc. Teach them how to launch programs from the command line and also the start menu.
+
+
+
+
+
+	After this we will look at installing software. Note that only root can install software since anything that is installed might pose a threat. Root must know what they are doing.
+
+	Give students advice on selecting good passwords. Passwords should not contain any word found in a directory or a common permutation. Passwords should be at least 8 characters and should include punctuation, numbers, and a combination of upper and lower case letters.
+
+	The two commands are apt-cache and apt-get. I will have students install some simply software and 
+
+
+
+%%
+%%	SERVICE LEARNING
+%%
+\section*{Tuesday, September 5, 2017 \hfill Day 1}
+
+	The first day of class we went through the grading of the class and what students must do to earn their points. The first week of class will be mostly organizational stuff -- setting up the projects. Students divided into their teams. There are few students in the Plants and Forestry group so each group will send students on a rotation to help.
+
+
+\section*{Wednesday, September 6, 2017 \hfill Day 2}
+
+	NB: Holly Hoeft dropped.
+
+	Decided to keep grades in a YAML or Perl file for each week. This will allow easy processing and placement on the class web site.
+	
+	All students were provided with a full set of outreach points for the week (see presentation): returning the syllabus signature page (5), providing a summary of the week (5, 10 if including a picture), and providing a description of intended outreach for next week (5).
+
+	\paragraph*{Animals and Habitat.}
+	Students have prepared the back counter for animals and have completed an inventory. The inventory has yet to be placed online.
+	
+	\paragraph*{Fisheries and Water.}
+	Rebecca and Cheyenne have expressed an interest in presenting at the GLSI Regional meeting in Gaylord. Check with Olivia is this would be appropriate. Austin, Lauren, and Robert have settled on Bass in the commons area. Maddie will contact Tim about trout and shocking this fall. Becca will get sturgeon water on her own. We will not have a separate degassing tank for the sturgeon since very few water changes were done. Cooper will handle trout and goldfish. Cheyenne has adopted salmon.
+	
+	We need buckets with lids for water.
+	
+	\paragraph*{Plants and Forestry.}
+	Nana is breaking down the hydroponics system in Mr. Pyles room. We need to have a system running by the end of the week and seeds planted in the classroom for germination. Rockwool was not found.
+
+	\paragraph*{Recycling and Energy.}
+	Recyclers include Zebany, Sheri, BreAnna, and Randi; Holly has dropped. All have been trained to read the meters (greenhouse and solar/wind) and will do so once a week. Zebany will get information about NEMCOG grants by the end of the week.
+
+
+\section*{Thursday, September 7, 2017 \hfill Day 3}
+
+
+
+\newpage\section*{Soft Skills}
+
+	Due to it's nature as an applied courses, students will be evaluated on their knowledge and use of soft skills in the context of their projects. These skills will help determine project assignments. Provide examples illustrating that students can demonstrate each skill.
+
+	\subsection*{1. Teamwork and Collaboration}
+	Employers want employees who play well with others -- who can effectively work as part of a team. ``That means sometimes being a leader, sometimes being a good follower, monitoring the progress, meeting deadlines and working with others across the organization to achieve a common goal,'' says Lynne Sarikas, the MBA Career Center Director at Northeastern University.
+
+	The ability to work in teams, relate to people and manage conflict is a valuable asset in the workplace. This skill is important to get ahead -- and as you advance in your career, the aptitude to work with others becomes even more crucial. Personal accomplishments are important on your resume, but showing that you can work well with others is important too.
+
+	It is imperative for college-bound students to function efficiently and appropriately in groups, collaborate on projects and accept constructive criticism when working with others. People who succeed only when working alone will struggle in college and beyond, as the majority of careers require collaboration.
+
+
+	\subsection*{2. Enthusiasm and Attitude}
+	Give examples of how you improved employee morale in a past position, or how your positive attitude helped motivate your colleagues or those you managed. Earnest suggests: ``Some people are naturally bubbly and always upbeat. Others have a more tame and low-energy demeanor. Especially if you tend to be more low-key, smile when you shake the interviewer's hand and make an extra effort to add some intonation and expression to your responses.''
+
+	Enthusiasm, Positive attitude, Accepting responsibility, Eagerness to learn new things, Open to new ideas
+
+	
+	\subsection*{3. Verbal and Non-verbal Communication}
+	Communication skills involve active listening, presentation as well as excellent writing capabilities. One highly sought-after communication skill is the ability to explain technical concepts to partners, customers and coworkers that aren't tech savvy.
+
+	Students can demonstrate these skills through interaction with peers, communication with staff, participating in meetings, constructing e-mails, creating displays, writing letters, giving presentations, using appropriate body language, maintaining eye contact, actively listening, asking good questions, and speaking on the telephone.
+
+
+	\subsection*{4. Problem Solving and Critical Thinking}
+	The ability to use creativity, reasoning, past experience, information, and available resources to assess issues and resolve issues is attractive because it saves everyone at the organization valuable time. Highlight this skill by listing an example of when your organization had a sticky situation and you effectively addressed it.
+
+	Project management skills: Organization, planning and effectively implementing projects and tasks for yourself and others is a highly effective skill to have. In the past, this was a job in itself. Nowadays, many companies aren't hiring project managers because they expect all of their employees to possess certain characteristics of this skill.
+
+
+	\subsection*{5. Professionalism and Work Ethic}
+	Employers are looking for employees that take initiative, are reliable and can do the job right the first time. Managers don't have the time or resources to babysit, so this is a skill that is expected from all employees. Don't make the hiring manager second-guess by sending a resume with typos, errors and over-exaggerated work experience.
+
+	Employers are on the lookout for people who take pride in their work, and are confident enough to put their name to it. They also respect people who can hold their hands up when things go wrong, and don't pass the buck. Everyone makes mistakes -- it's how you react and learn from them that counts.
+
+
+	
+% 	\begin{itemize}
+% 		\item Research, IT Skills, Data analysis, Problem solving, Creativity
+% 	\end{itemize}
+% 
+% 
+% \subsection*{Interpersonal skills; Teamwork}
+% 
+% 	
+% 
+% 	\begin{itemize}
+% 	
+% 		\item Acting as a team player -- this means not only being cooperative, but also displaying strong leadership skills when necessary.
+% 
+% 		\item 5. Leadership: While it is important to be able to function in a group, it is also important to demonstrate leadership skills when necessary. Both in college and within the workforce, the ability to assume the lead when the situation calls for it is a necessity for anyone who hopes to draw upon their knowledge and ``hard'' skills in a position of influence.
+% 
+% 		Companies wish to hire leaders, not followers. The best way for students to develop this skill as they prepare for college is to search for leadership opportunities in high school. This could mean, among other things, acting as captain of​ an athletic team, becoming involved in student government or leading an extracurricular group. 
+% 		
+% 		\item Employers want employees who play well with others -- who can effectively work as part of a team. ``That means sometimes being a leader, sometimes being a good follower, monitoring the progress, meeting deadlines and working with others across the organization to achieve a common goal,'' says Lynne Sarikas, the MBA Career Center Director at Northeastern University.
+% 
+% 		\item A good team player has the team goals clear in their mind and works with others to achieve them. They are open and honest, and offer constructive suggestions and listen to others.
+% 
+% 		\item A report from The Economist Intelligence Unit found that 63 percent of executives believe today's workforce lacks collaboration and teamwork skills. How do you know if you personally lack such skills? Try asking yourself the following questions:
+% 
+% 		- Do you think your approach to things is always the best?
+% 
+% 		- Do you hate it when other people question your approach to things?
+% 
+% 		- Do you hate working on assignments that require you to rely on others in order to get work done?
+% 
+% 		\item No person is an island. You need to be comfortable working, collaborating and interacting with others. So pitch in when needed, respect others opinions, sit in on group meetings and provide solutions. 
+% 
+% 		\item Teamwork -- cooperative, gets along with others, agreeable, supportive, helpful, collaborative
+% 
+% 		``Coming together is a beginning. Keeping together is progress. Working together is success.'' Henry Ford
+% 
+% 	\end{itemize}
+% 
+% 
+% 
+% \subsection*{Verbal and Written Communication skills}
+% 
+% 	It's more than just speaking the language. Communication skills involve active listening, presentation as well as excellent writing capabilities. One highly sought-after communication skill is the ability to explain technical concepts to partners, customers and coworkers that aren't tech savvy.
+% 	
+% 	Students can demonstrate these skills through interaction with peers, communication with staff, participating in meetings, constructing e-mails, creating displays, writing letters, giving presentations, using appropriate body language, maintaining eye contact, actively listening, asking good questions, and speaking on the telephone.
+% 
+% 	\begin{itemize}
+% 		\item It's more than just speaking the language. Communication skills involve active listening, presentation as well as excellent writing capabilities. One highly sought-after communication skill is the ability to explain technical concepts to partners, customers and coworkers that aren't tech savvy.
+% 
+% 		\item this is paramount to almost any job. Communication involves articulating oneself well, being a good listener and using appropriate body language.
+% 		
+% 		\item A common complaint among employers is that young people do not know how to effectively carry on a conversation and are unable to do things like ask questions, listen actively and maintain eye contact.
+% 
+% 		The current prevalence of electronic devices has connected young individuals to one another, but many argue it has also lessened their ability to communicate face-to-face or via telephone. These skills will again be important not only in college, where students must engage with professors to gain references and recommendations for future endeavors, but beyond as well.
+% 
+% 		An inability to employ these skills effectively translates poorly in college and job interviews, for instance. High school students can improve these traits by conversing with their teachers in one-to-one settings. This is also excellent training for speaking with college professors. Obtaining an internship in a professional setting is also a wonderful method to enhance communication and interpersonal skills.
+% 
+% 		\item This doesn't mean you have to be a brilliant orator or writer. It does mean you have to express yourself well, whether it's writing a coherent memo, persuading others with a presentation or just being able to calmly explain to a team member what you need.
+% 
+% 		\item This is perhaps the most common entry on person specifications for job vacancies, and for good reason. Skilled communicators get along well with colleagues, listen and understand instructions, and put their point across without being aggressive. They can change their style of communication to suit the task in hand -- this can be invaluable in many different situations, from handling conflict to trying to persuade a customer of the benefits of buying your product. If you've got good communication skills you should be able develop constructive working relationships with colleagues and be able to learn from constructive criticism.
+% 
+% 		\item Communication skills are one of the most important soft skills managers need to be effective. Managers must possess the ability to get their point across to employees, co-workers and customers. Effective communications ensures that everyone is on the same page and know what is expected of them.
+% 
+% 		\item The activities in this section will not only help participants practice and recognize how they provide information to others, but also help them consider how others may prefer to receive information. It is important to reinforce with participants that communication skills involve give and take -- and they can, indeed, be learned and strengthened over time.
+% 		
+% 		\item By ``communication,'' I mean more than just being able to exchange information with colleagues face-to-face, on the phone, and via emails and reports. Everyone can pretty much do that.
+% 
+% 		Rather, employers are looking for more advanced communication skills, particularly in the STEM fields. Businesses want employees who can communicate complex ideas clearly to the layman and the expert alike and through multiple mediums. Persuasion and negotiation skills are crucial in this respect. If you want to be a highly employable and progressive professional, you'll really need to master these advanced communication skills.
+% 		
+% 		\item Your interview is a great opportunity to demonstrate how well you communicate, so be sure you prepare and practice responses to showcase your best skills. Earnest says, ``Be concrete with these examples, and bring proof to the interview. Provide examples of materials you created or written campaigns you developed in past positions.''
+% 		
+% 		\item Articulate and skilled communicators are able to clearly express thoughts and ideas and understand the tasks at hand. Also, they get along with colleagues because they tend to be better listeners.
+% 		
+% 		\item Communication -- oral, speaking capability, written, presenting, listening.
+% 
+% 		``You can have brilliant ideas, but if you can’t get them across, your ideas won’t get you anywhere.'' Lee Iacocca
+% 
+% 	\end{itemize}
+
+	
+\end{document}
+
+
+\section*{\it General Requirements}
+
+\subsection*{\it Maintenance}
+
+
+Communication (showing paperwork, research, and maintenacne to public)
+- community partners
+- display
+- lessons
+- video
+
+Monitoring (collection and recording of data)
+- temperature (daily)
+- water quality monitoring
+- growth rate
+- inventory
+
+Maintenance (daily and weekly tasks)
+- food, nutrients
+- Water changes
+- cleaning
+- organizing
+
+Paperwork (applications, permits, internal reports)
+paperwork is something that is completed in many forms. These include permits, applications, permission slips, area applications, etc.
+
+- field trip requests
+- transportation 
+- sturgeon
+- salmon
+- sea lamprey
+
+Research
+- research is performed primarily when students have questions to answer, are developing a new project, or just learning about their subject.
+- varies based upon the time of year. For example, students in the fisheries group will perform research prior to receiving the fish. They will have more stuff to do in the beginning as there is limited maintenance to perform.
+
+
+
+\newpage
+\section*{\it Fisheries and Water}
+
+The \textit{Fisheries and Water (FW)} team is responsible for managing aquaria in school (room 302, other classrooms, and offices).
+
+On a daily basis, students feed fish, check mechanical equipment, perform water changes, check temperature.
+
+On a biweekly basis, students monitor water quality (temperature, pH, total ammonia, nitrite, and nitrate), rinse filters, provide updates at a team meeting.
+
+On a month basis, students check chiller flow, update community partners, 
+
+
+
+
+
+
+
+\newpage
+\section*{\it Assessment and Evaluation}
+
+
+\subsection*{\it Project Maintenance \hfill 40\%}\,
+
+Each (month? week? every other week?) students apply to work on a project with no more than one other student. If multiple students sign up for a project, the project is divided by the instructor or by the students. Each week, students complete maintenance and verify that tasks are completed by signing off. Each student is expected to sign their own initials. These forms are to be completed daily and placed in the project binder (need 1 inch binders per project). These binders are for long-term maintenance records. It should include graphs, charts, contact information. There is also an area binder and a class binder that contains more information.
+
+Students are graded based upon the completion of the project. Students who are absent have their grade reduced by 0.5\% per absence or tardy. Excessive tardiness results in additional penalties of some sort. Groups who fill in earn volunteer points.
+
+Project Maintenance is graded holistically with a letter-grade and based upon a rubric. Groups may be assigned a project for maintenance if there are many students in the group or few people in the class. Inspections happen at least twice a week with one occuring on Friday. Feedback is provided to groups as needed.
+
+Some outreach is required of the entire group. Students may forego team outreach. Students receive points for attending team meetings. During a team meeting, students share their accomplishments and provide suggestions to other groups. 
+
+
+\begin{itemize}[label=$-$]
+	\item When can students change groups?
+	\item Do students pick their own groups?
+	\item Maximum number of students per group?
+	\item Excessive tardiness?
+\end{itemize}
+
+
+\vspace*{3mm}
+
+{\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{ l c }
+	Grading Category & Weight\\
+	\midrule
+	Project Maintenance    & 40\% \\
+	Education and Outreach & 40\% \\
+	Final and Midterm Exam & 20\% \\
+	\end{tabular}
+}
+
+\vspace*{4mm}
+
+\subsection*{\it Education and Outreach \hfill 40\%}
+
+Education and Outreach consists of additional tasks that students accomplish that are not based upon daily maintenance. Ideally these are activities that deal with students actively interacting with the community or partners.
+
+There is a form that students complete on a bi-weekly basis where they submit their outreach points. Some project maintenance selections have required outreach points otherwise students are removed from the group.
+
+\vspace{4mm}
+
+\subsection*{\it Exam Presentations \hfill 20\%}
+
+The midterm and final exams consists of presentations. The midterm presentation occurs around halfway through the semester and consists of knowledge presented by the student about a research topic of their choice. Ideally this consists os a video presentation of around 3 minutes. Students may choose an alternate form for reduced points and make up the difference through additional outreach. Students may also present to a community partner in lieu of this knowledge presentation. The midterm presentation is worth 10\% of the final grade and occurs during the first half of the class.
+
+The final exam is also a presentation about a reflection throughout the course. Students are expected to compile pictures, videos, etc. It is expected that students will address their teamwork skills, experiences, impact upon the community, etc. Students may complete a written paper instead for reduced points and make up the difference through outreach. Students may put points into any category they wish.
+
+
+%%
+%%
+%%
+
+
+%%
+%%
+%%
+\newpage
+\section*{\it Initial Course Application}\null
+
+{\renewcommand{\arraystretch}{1.50}
+\begin{tabular}{ l l l l }
+Name  & \line(1,0){70} \\
+Grade & \line(1,0){70} \\
+\end{tabular}}
+
+If you have previously taken the course, are you willing to mentor other students in an area in which you have experience?
+
+Are you willing to volunteer in other areas due to absences or additional work?
+
+
+
+% Student name
+% Average attendance and tardiness throughout high school by semester
+% Previous ES/SL grades
+% On-track for graduation
+% 
+% Syllabus signature page submitted
+% 
+% Areas of Interest and Specific Project Application
+% AH - 
+% FW - 
+% PF - 
+% RE - 
+% 
+% Previous experience in areas
+% 
+% Skills related to area.
+
+
+
+
+%%
+%%
+%%
+\newpage
+\section*{\it Service Projects}
+
+Service projects challenge students to apply critical thinking and problem solving skills in context. Students solve practical problems using teamwork, collected data, and research. Results are communicated within the school and to community partners.
+
+\subsection*{\it Project Areas}
+
+Each student applies to one of five project areas. After approval, the student joins a team to complete maintenance using protocols, and collect and diseminate information to the public. Each students chooses to be graded individually or as part of a group.
+
+	\begin{multicols}{2}
+	\begin{itemize}[label=$-$]
+	\item \textit{Animals and Habitat}
+	\item \textit{Fisheries and Water}
+	\item \textit{Plants and Forestry}
+	\item \textit{Recycling and Energy}
+	\item \textit{Technology and Data}
+	\end{itemize}
+	\end{multicols}
+
+
+\subsection*{\it Assessment}
+
+Forty percent of the semester grade is determined by the quality of task completion in four categories. Once a week, a grade is assigned to each category and averaged to determine a group grade. Students may accept the group grade or request an individual grade based upon their own accomplishments.
+
+% 	\begin{multicols}{2}
+	\begin{itemize}[label=$-$]
+	\item \textit{Maintenance and Organization.} These are the periodic tasks assigned to projects and areas. Each day a group receives a grade on this aspect. Students may earn an individual grade by recording their own contribution.
+	
+	Follow protocols, complete tasks, Label materials, put away items, empty trash, clean up counters, sweep floor, tighten handles, put away equipment, push in chairs.
+	
+	\item \textit{Information and Communication.} These are the communication of information as a group. This portion is not about who does the work but if the work gets done. Think of this as required outreach. The person who performs the outreach earns additional points.
+
+	Submit reports, take inventory, collect data, finish assignments, answer questions, calendar, budget, create displays and posters, update partners, participate in meetings, publish articles, update NEMI GLSI, update class, take quiz, attend lesson
+
+	\end{itemize}
+% 	\end{multicols}
+
+
+
+\newpage
+\section*{\it Existing Projects}
+
+	\subsection*{\it Animals and Habitat}
+	Allows 2--3 students.	
+
+	\begin{multicols}{2}
+	\begin{itemize}[label=$-$]
+	\item Hedgehogs
+	\item Rose hair tarantula
+	\item Rough green snake
+	\end{itemize}
+	\end{multicols}
+
+
+	\subsection*{\it Fisheries and Water}
+	Allows 4--8 students with up to two (2) students per project.
+
+	\begin{multicols}{2}
+	\begin{itemize}[label=$-$]
+	\item Goldfish
+	\item Salmon
+	\item Sturgeon
+	\item Trout
+	\item Turtles
+	\end{itemize}
+	\end{multicols}
+
+
+	\subsection*{\it Plants and Forestry}
+	Allows up 4--6 students. Students sign up for one of the two major projects (hydroponics and gardening). Additional items are assigned based upon need throughout the semester.
+	
+	\begin{multicols}{2}
+	\begin{itemize}[label=$-$]
+	\item Apple orchard
+	\item Flood table
+	\item Fossil park
+	\item Hydroponic lettuce
+	\item Raingarden
+	\item School forest management plan
+	\item Schoolyard habitat
+	\item Vermicomposting
+	\end{itemize}
+	\end{multicols}
+
+
+	\subsection*{\it Recycing and Energy}
+	Allows 4--8 students with up to two (2) per project. There are additional assignments in this area since recycling does not take a large amount of time.
+	
+	\begin{multicols}{2}
+	\begin{itemize}[label=$-$]
+	\item Elementary
+	\item Cardboard
+	\item Central
+	\item Secondary
+	\end{itemize}
+	\end{multicols}
+
+
+	\subsection*{\it Technology and Data}
+	\begin{multicols}{2}
+	\begin{itemize}[label=$-$]
+	\item Attendance
+	\item Video production
+	\end{itemize}
+	\end{multicols}
+
+
+
+\newpage\newgeometry{inner=1.3in,outer=1.3in}
+\section*{\it Education and Outreach}
+
+Throughout the course students earn education and outreach points by making significant improvements to projects, communicating with the public, presenting information, and performing service outside of regular class hours. Students track and submit their outreach points every week. The number of points awarded may be reduced for multiple students performing an activity or reduced quality.
+
+	\subsection*{\it Level 5 \hfill 50 points}
+
+		Two weeks. Extended and important events where a student is responsible for interacting with the public. The level is significant in that it requires a signficant amount of preparation.
+
+		\begin{multicols}{3}
+% 		\raggedcolumns
+		\begin{itemize}[itemsep=0mm,label=$-$]
+		\item Watershed Academy
+		\item Producing a video (3--5 min)
+		\item Sturgeon guard
+		\item Partner presentation
+		\item Shivaree display
+		\item Earth Week Plus! display
+		\item Plant sale
+		\item School board presentation
+		\end{itemize}
+		\end{multicols}
+
+
+	\subsection*{\it Level 4 \hfill 25 points}
+
+		One week. Major outreach consists of direct personal interaction or leadership with the public. Requires artifact.
+
+		\begin{multicols}{3}
+% 		\raggedcolumns
+		\begin{itemize}[itemsep=0mm,label=$-$]
+		\item Updating complex display
+		\item Attend meeting (out)
+		\item Present lesson (15--20 min)
+		\item Summarizing a field trip
+		\item Major research
+		\item Speak to press (2--3 min)
+		\item Grant application
+		\item Major fund-raiser
+		\item Research trip
+		\item Duck box construction
+		\end{itemize}
+		\end{multicols}
+
+
+	\subsection*{\it Level 3 \hfill 10 points}
+
+		Two days. Minor outreach consists of something that the student does to convey information to the public through some sort of display.
+
+		\begin{multicols}{3}
+% 		\raggedcolumns
+		\begin{itemize}[itemsep=0mm,label=$-$]
+		\item Creating a minor display
+		\item Volunteering for minor event
+		\item Maintaining weekend project
+		\item Update community partner
+		\item Guided tour to the public
+		\item Attending field trip
+		\item Arranging a major trip
+		\item Mentoring
+		\item Minor research paper
+		\item Area quiz
+		\item Speak in video
+		\item Team meeting
+		\item Loading trailer
+		\item Research question
+		\item Invasive species removal
+		\end{itemize}
+		\end{multicols}
+
+
+	\subsection*{\it Level 2 \hfill 5 points}
+
+		One day or thirty minutes. These are minor actions that take a short amount of time but require thought and action.
+
+		\begin{multicols}{3}
+		\raggedcolumns
+		\begin{itemize}[itemsep=0mm,label=$-$]
+		\item Substitute or volunteer
+		\item WQ testing
+		\item Short research question
+		\item Appear in video
+		\item Manual labor (30 min)
+		\end{itemize}
+		\end{multicols}
+
+
+	\subsection*{\it Level 1 \hfill 2 points}
+
+		One day or fifteen minutes. Level one outreach is simple maintenance that occurs outside of class. The only artifact required is some sort of documentation.
+
+		\begin{multicols}{2}
+		\begin{itemize}[itemsep=0mm,label=$-$]
+		\item Checking on projects
+		\item Minimal maintenance
+		\item Attendance
+		\end{itemize}
+		\end{multicols}
+
+\restoregeometry
+
+
+
+%%
+%%
+%%
+\newpage\section*{\it Fisheries Maintenance}
+
+Application
+Assignment; maximum two per project
+
+1. Maintenance (5 points per day)
+
+If a project is not yet started, then determine what can be done to keep the group members busy.
+
+2. Research
+3. Displays
+4. Training
+5. Lessons
+6. Setting up
+7. Creating video
+
+Students complete maintenance in groups of their choice and may change prior to any week with prior instructor approval. Students work as part of a department team on all tasks. On applications, students select the projects they are willing to maintain. Unclaimed projects are assigned to a group that has excess students to maintain. Up to two students may work on a project without incurring additional work. If fewer students work in an area, they will either receive additional credit or have reduced tasks.
+
+As an example, suppose there are four students who choose the sturgeon and no students who select the goldfish. The goldfish tank is then assigned to the students working on the sturgeon. Students are to develop a plan to rotate responsibilities or use one supplied by the instructor.
+
+Posted on each tank is the protocol and set of instructions. Water changes are listed 
+
+Each tank has posted a set of instructions for daily maintenance. As a substitute, a student is responsible for taking care of these tasks. This paper is also posted on the wall, and filed in the folder, and posted on the web site.
+
+There are also a set of tasks that occur less frequently. These are tasks for those who are in the area. Students assigned to an area who do not complete the tasks regularly, anything less than a `C' may be reassigned to another area.
+
+
+
+	\subsection*{\it Maintenance and Organization}
+	\begin{multicols}{3}\begin{itemize}[label=$-$]
+	\item Feed
+	\item Clean glass
+	\item Rinse filters
+	\item Water changes
+	\item Check mechanical: filter, sponges, pumps
+	\item Sterilize tanks
+	\item Put away food
+	\item Return clipboard
+	\end{itemize}\end{multicols}
+
+	\subsection*{\it Information and Communication}
+	\begin{multicols}{2}\begin{itemize}[label=$-$]
+	\item Complete and reports
+	\item Observations
+	\item Temperature
+	\item Measure length
+	\item pH, NH4, NO3, NO4
+	\item Weight
+	\item Mortality
+	\item Water volume change
+	\item Filter running
+	\item Food record
+	\end{itemize}\end{multicols}
+
+	\subsection*{\it Education and Outreach}
+	\begin{multicols}{2}	\begin{itemize}[label=$-$]
+	\item Report to class bi-weekly
+	\item Pictures and raw video, upload
+	\item Notify partners: SFT, DNR
+	\item Display board
+	\item How-to video: water change
+	\item Threatened species permits
+	\item Charts of data
+	\item Arrange release and pickup
+	\item Sturgeon Rearing facility tour
+	\item Hatchery: Oden, Jordan, Platte
+	\item Sturgeon guard
+	\item Refill degassing tank
+	\item Inland Lakes conference
+	\item Watching and discussing videos
+	\item Posters and displays
+	\item Reading a chapter of a book
+	\item Take a quiz
+	\item Purchase food from store
+	\item Types of rivers
+	\item Arrange for speakers
+	\item Fishing trip
+	\item Macroinvertebrate identification
+	\item Grayling restorating
+	\end{itemize}\end{multicols}
+
+
+\newpage
+% \newgeometry{inner=1in,outer=1.5in,top=1in,bottom=1.5in}
+\section*{\it Lake Sturgeon Protocol}
+
+	\subsection*{\it Daily or Volunteer}
+	\begin{itemize}[label=$-$]
+
+	\item {\it Food.} Fill cup half-way with water from the sturgeon tank. Place the correct number of bloodworm cubes in the cup to thaw. Ensure metallic backing is not in the cup. Let thaw. Turn off backfilter and circulating pump. Dump contents into tank on the side away from the rocks. Wait for food the settle. Turn on filters. Ensure refrigerator is closed. Record information on the appropriate data sheet. Ensure top of tank is covered. Watch sturgeon to see if it is aggressively eating the food. Record amount of time to eat all food. Notify instructor when there is about one week of food left.
+
+	\item {\it Temperature.} Record temperature of the chiller. Record temperature of the tank from two different locations using the thermeters in the tank.
+
+	\item {\it Mechanical.} Ensure backfilter and sponge pump are running. Ensure circulating pump is pushing water. This may be done every other day.
+	
+	\item {\it Clean.} Ensure glass is cleaned of finger prints and algae. Use only approved solutions and clean towels to avoid contamination. Ensure that the area is clean, spilled water is cleaned (place a wet floor sign if necessary), buckets are put away, data sheets put away.
+
+	\item {\it Display.} Fix display of permits or other information as needed.
+	
+	\end{itemize}
+
+	\subsection*{\it Weekly}
+	\begin{itemize}[label=$-$]
+	\item {\it Water Changes.} Check amount of water to be replaced. Ensure enough water is available in the degassing tank. Use siphon to remove debris from bottom of tank, especially among rocks. Four inches from the top of the bucket is four gallons. Refill tank to the correct depth. You may need to replace more water than you took out due to evaporation. Empty bucket. Clean up any spilled water and return siphon and bucket. Record information on the appropriate data sheet. Keep track of the amount of water still available in the Black River degassing tank. If Black River water is not available, use water from the general degassing tank.
+
+	\item {\it Data.} Update the sturgeon spreadsheet for all data. Be prepared to share a printed copy during the team meeting.	
+	\end{itemize}
+
+	\newpage
+	
+
+	\subsection*{\it Bi-weekly}
+	\begin{itemize}[label=$-$]
+	\item {\it Water Quality (E\&O:5)} Check the ph, TAN, NO2, and NO3. Calculate the amount of ammonium and ammonia based upon temperature and pH. Immediately notify the instructor if values are out of acceptable range or show trend of increasing.
+
+	\item {\it Report (E\&O:5)} Prepare a report to discuss progress and changes in the sturgeon tank answering the following questions. Be prepared to offer suggestions to mitigate problems.
+	\end{itemize}
+
+
+	\subsection*{\it Monthly}
+	\begin{itemize}[label=$-$]
+
+	\item {\it Chiller Rate (E\&O:2)} Time how long it takes to fill a 1 gallon bucket with water from the chiller. The purpose is to ensure that the chiller tubing is not becoming blocked. Record the amount of time.
+
+	\item {\it Growth Rate (E\&O:2)} Measure the fork-length and weight of the sturgeon. Record data. This may be done up to twice a month but no more often than every two weeks.
+
+	\item {\it Partners (E\&O:10)} Provide an e-mail or facebook update to Sturgeon for Tomorrow. Should include pictures, notable events, summary of data collected, and links to produced videos. Should also include knowledge gained from lessons or presentations.
+
+	\item {\it Rinse Filters.} Rinse filter in water drawn from sturgeon tank when doing a water change. Squeeze filters by hand. Do not run under tap water as this contains chlorine that will destroy beneficial bacterial. The purpose is allow water to flow through the filter; not to make it clean.
+	
+	\end{itemize}
+
+
+% \restoregeometry
+
+
+
+	
+
+\newpage\newgeometry{inner=1in,outer=1.5in}
+\section*{\it Fisheries Protocol}
+
+	\subsection*{\it Requirements}
+
+	\begin{itemize}[label=$-$]
+	\item {\it Food.} Feed all animals assigned to the fisheries group on a daily basis. Follow established protocol for feeding. Record date, time, name, and amount of food given.
+	
+	\item {\it Water Changes.} Perform water changes as scheduled using established protocol. Record amount of water removed from the tank. Maintain and analyze data.
+
+	\item {\it Rinse Filters.} Rinse filters in water removed from the tank. Do not rinse filters under chlorinated tap water as this will kill beneficial bacteria. Record name, date, and time.
+
+	\item {\it Equipment.} Ensure all equipment is in working condition. Fix equipment as appropriate. Notify instructor of equipment that needs to be replaced.
+	
+	\item {\it Water Quality.} Test the water quality as needed. Tests include total ammonia nitrogen, nitrite, nitrate, and pH. Record data. Discuss values during team meeting. Calculate ammonia/ammonium ratio.
+
+	\item {\it Length and Weight.} Measure growth rate of individual animal. Record data.
+
+	\item {\it Team Meetings.} Attend and participate in(e.g., length or weight)  team meetings. Share data-driven suggestions and success. 
+	
+	\item {\it Temperature.} Record the temperature daily. Create a graph of the data and publish the results.
+
+	\item {\it Update Partners.} Send monthly e-mail, facebook post, video, pictures, and data to community partner. Focus on the interaction and education of students.
+
+	\item {\it Newsletter.} Provide information for a newsletter published on a monthly basis.
+
+	\item {\it Permits.} Fill out and send permits. Ensure that these are displayed near the tank.
+
+	\item {\it Displays.} Update fisheries display on a bi-weekly basis with new information. Create informational signs for the classroom. Develop a set of talking points when discussing the animal.
+
+	\item {\it Videos.} Produce at least one short how-to instructional video of 2--3 minutes.  Must contain correct and relevant information.
+
+	\item {\it Team Meetings.} Participate in lessons, meetings, presentations, and discussion regarding the lake sturgeon and all of fisheries.
+
+	\item {\it Events.} Attend field trips and events such as the Sturgeon release, Shivaree, Sturgeon Guard, Hatchery tours, Sturgeon conference, and Earth Week Expo.
+
+	\item {\it Pictures.} Take pictures and video of the animals to be used in videos and share with community partners.
+
+	\item {\it Lessons and Tours.} Present lessons to elementary students and give tours as needed for the fisheries department. Be fluent in the talking points developed by the department. Examples include MEECS, Project Wild, Project Learning and Tree.
+
+	\item {\it Budget.} Track expenditures related to maintaining the sturgeon in the classroom. Prepare a monthly budget for the instructor.
+
+	\item {\it Inventory.} Maintain an inventory of materials. Present information during team meetings.
+	
+	\item {\it Journal and Calendar.} Keep track of important events related to the sturgeon and maintain this information in the project file.
+
+	\item {\it Research.} Perform research to answer questions related to our animals. Be prepared to share your information with others.
+
+	\item {\it Monthly Report.} Present a monthly report to the class about the state of the fisheries department. Should be no longer than 5 minutes in total.
+	
+	\item {\it Speakers.} Arrange for speaks to present to the class on variety of topics related to fisheries.
+	
+	\item {\it Collect Data.} Collect and record data on a regular basis. Aggregrate data on spreadsheet and communicate to others visually.
+	
+	\item {\it Clean and Organize.} Maintain a safe and clean work area. Put away materials when finished. Label and organize cabinets and drawers.
+	\end{itemize}
+
+\restoregeometry
+
+\newpage\section*{\it Lake Sturgeon Calendar}
+
+	\subsection*{\it Week 1 -- 09/05 -- Introduction}
+	\begin{itemize}
+	\item Arrange classroom
+	\item Sterilize tanks
+	\item Fill tanks
+	\item Chemical test kit training
+	\item Lesson: nitrogen cycle, bacteria, tan, no2, no3, pH, healthy tank
+	\item Research: EPA levels, Chlorine city water
+	\item Water change protocols (video)
+	\item Permits and applications (Lake Sturgeon, Salmon, Lamprey)
+	\item MEECS lesson: healthy water
+	\item Syllabus
+	\item Budget, journal, notes
+	\item Inventory
+	\end{itemize}
+
+	\subsection*{\it Week 2 -- 09/11 -- Introduction}
+	\begin{itemize}
+	\item Initial signs
+	\item 
+	\end{itemize}
+
+
+
+	
+	
+	
+	\newpage
+Roughly half of class time spent on these areas. Team interview and tasks. Additional outreach points for education such as watching video.
+
+Grades are determined by the quality of completed tasks in each of four areas.
+
+- assigned individually, group, or by team
+- determined by weekly inspection
+- overall number of signatures
+- completion of tasks
+
+Volunteer us worth 4 or 5 points since it is only maintenance.
+
+Teams are collectively responsible for area. If something is no done, it falls to the team. Area assignments determined at beginning of week or by signature daily paperwork. Something like daily log with more detail. Separated by area.
+
+Maximum of 5 pts per day. 2.5 pts on a half-day. Letter grades of A--F assigned on 4 pt scale. May use half-grades or $+$/$-$ grading. Average of 4 areas at 0.25 pt resolution.
+
+Group gets overall grade. There is a group grade determined from the four areas that is assigned to everyone. There are also individual grades assigned based upon individual contributions.
+
+If a student elects an individual grade, they are assessed on the work they did in each of the four areas and their contributions to a working team. Note that volunteer work is individual.
+
+Default: students receive individual grades in an area.
+
+Maintenance		G
+
+Organization	G	this could be a rotated task
+
+Information		I
+
+Communication	I
+
+Students who are reassigned earn volunteer points. Individual grades can be combined with group grades.
+
+Another method is to divide an area into tasks that must be completed each day and then assign individual students to the rotating tasks for, say, 3 days at a time.. Then, each student is rated individually. Attendance should remain a factor in grading but reduced. If a student is not present, their grade is reduced by 0.5\% since there was no contribution. Strictly speaking, this should be closer to 0.47\%. Justification: we have 10 half-days, and about 3--4 snow days results in about 0.4878\%.
+
+If groups vote, they may also choose to divide into subteams: Lake Sturgeon, etc. Note that there may not be enough work for some groups at times.
+
+Take the choice away?
+
+
+
+%%
+%%
+%%
+\newpage
+\section*{\it Project Area Application}\,
+
+Student name
+Date of application
+
+Choosen area
+- AH
+- FW
+- PF
+- RE
+- TD
+
+Election of grading \ldots list the responsibilities for each type of grading scheme
+- Individual
+
+- Group/Team
+
+
+\newpage
+\begin{itemize}
+\item Create an aquarium biofilter
+\item Water quality monitoring
+\item Geographic Information Systems
+\item Hydroponic system
+\item Raingarden 
+\item Fossil park
+\item Schoolyard Habitat design
+\item Fund raising
+\item Grant writing
+\end{itemize}
+
+
+
+\newpage
+40\% of semester grade
+Graded weekly
+Application
+May select personal or secondary project
+Group or individual grade
+Volunteer in area
+Assigned responsibilities
+
+
+\subsection*{\it Application Process}
+Applications for project area (see appendix on forms). Applications based upon numbers of students. Students may be reassigned to an area on a rotating basis to cover all major projects. Students will also need to sign up as a substitute for at least one area.
+
+
+\subsection*{\it Grades}
+\marginnote{Each of the four areas are weighed equally when calculating the service project grade.}
+%
+\noindent Students receive a group grade based upon completion and quality of daily and weekly tasks. Students may opt to have their grade calculated individually (see requirements elsewhere). Letter grades are assigned to each category and then averaged. Points are scaled based upon the number of school days in the week.
+%
+Distribution of points (maintenance, display, data, organization). Include a chart in the margin.
+
+
+
+\paragraph{\it Individual Grade Option.}
+Instead of a group grade, a student may elect each week to have their grade calculated individually. See here for additional details and requirements.
+
+\end{document}
+
+
+
+
+\newpage\section*{Assessment and Evaluation}
+\marginnote{Discuss the areas and reasonsing for grading.}
+Students earn their points through a combination of (a) project maintenance or development, (b) education and outreach, and (c) final and midterm presentations. In each area, students select how they will earn their points and will be graded based upon a common rubric. Students may earn additional points by adopting a minor project or performing additional education and outreach.
+
+\subsection*{Project Maintenance \hfill 40\%}
+\marginnote{Discuss the frequency of grades and refer to the rubric. Include option for individual grade.}
+Each student applies a project area to perform maintenance and upkeep. By default, each member of the team receives the same grade unless a student chooses to have their grade calculated individually. Each project has a set of daily and weekly tasks that are to be completed. Grades are assigned weekly. Students who are absent or late have their grade reduced by 0.5\% per instance. Inappropriate behavior may result in a student removed from a group or confined to the classroom.
+
+	\begin{enumerate}
+	\item Group Grade \ldots Each student receives the same group grade based upon following protocols, performing maintenance and upkeep, and completing additional tasks assigned to the group.
+	
+	\item Individual Grade \ldots The student receives an invididual grade based upon the completion of a journal and keeping track of their own accomplishments. The tasks remain the same. Items that directly relate to the student.
+	\end{enumerate}
+
+	{\renewcommand{\arraystretch}{1.35}
+	\begin{tabular}{ l l p{4in} }
+	Maintenance  & 40 & Protocols, inspection \\
+	Information  & 40 & Data collection, reports, forms \\
+	Organization & 20 & Materials in order, location \\
+	\end{tabular}
+	}
+
+	\vspace*{3mm}
+	
+	\par Is there a manager who signs off or a student who inspects? This could be optional for outreach points. Or this could be something rotated through the group.
+
+	\par Journal \ldots students can keep a journal or daily log of activities to increase their project points. This journal will result in an increase of 10\% on their project grade and be extremely useful when performing their midterm and final exam. Criteria for each is distributed early in the class. I can also increase points at the end of the course based upon teacher observation of soft skills.
+
+	
+\noindent
+\paragraph{Rubric.}%
+Students are graded on the following categories at least twice a week.
+
+
+Area is Clean and Organized - 25\%, Inventory bi-weekly. This includes the cabinets. Cabinet should be organized, labelled, etc. Should include a check-list of items that need to be accounted for.
+A - Exceptional. All items are put away, trash in bin, no materials left out
+B - Some improvement
+C - Maintained only
+D - Left worse
+F - Unacceptable
+
+Tasks Completed - 25\%. Varies depending upon the number and importance of the tasks, number of students present, and size of the group. Tasks are identify by student
+A - All daily and weekly tasks completed
+B - All daily
+C - Most major, half minor
+D - 
+F - 
+
+Data Collection \ldots  - 25\%
+A - Data collected, Accurate, and Organized
+B - 
+C - 
+D - 
+F - 
+
+Displays - 25\% \ldots Information compiled are presented publicly on bulletin boards, display, etc. this include a calendar of events associated with the group. If no data applies, then this area is not included in the average. This should be an easy one as very little data needs to be collected. This can include updating a graph or chart on a bi-weekly basis, printing, and placing in the folder or updating an online spreadsheet (i like the last)
+A - Data collected, accurate, Timely, Reportning on the data
+B - 
+C - 
+D - 
+F - 
+
+
+Students who fail to perform required tasks in a personal project receive fewer points or may have their certification revoked. What if someone does not contact their community partner?
+
+	
+\noindent
+\paragraph*{Minor Project.}%
+Students may also elect to manage a minor project with up to one additional student. This may replace a major project in which case the student will perform maintenance and research related to their project but will not be directly associated with an area. Students may earn outreach points for working on a minor project in addition to a major project.
+
+	\begin{multicols}{2}
+	\begin{enumerate}
+	\item Aquapoincs \ldots research, set-up, manage, and report on a small hydroponic system.
+	
+	\item Biofilter \ldots research, construct, manage, and report on a student-created aquarium biofilter.
+	
+	\item Hydroponics \ldots research, construct, manage, and report  on a student-created hydroponic system.
+	
+	
+	\end{enumerate}
+	\end{multicols}
+
+
+
+
+
+
+Responsible for maintenance. Absences and tardies affect grade. Points made up through outreach. Volunteers may perform basic maintenance at 5 points. See examples in appendix. Established projects that have a definite agenda are major projects. Minor projects are transient and only exist for a limited amount of time.
+
+Consider how students may choose their projects. Students choose a major and one or more minors. The major is the primary project maintenance that is performed by the student.
+
+Students may choose how they are graded. This can either be individually or with their group. By default, students receive the group grade. However, during any week, students can choose to use their individual journal grade that lists their accomplishments. However, certain parts are still attributed to the individual grade.
+
+Can students choose more than one project? Yes, but how? Students may not adopt more than one project unless they choose an individual grading method, a personal project, or something else to make certain they are completing their work.
+
+Develop a list of minor projects that students can work on. Students could also 
+
+\begin{itemize}
+\item Mini-hydroponic set-up
+\item 
+\end{itemize}
+
+
+
+	\lipsum[2]
+
+
+	\begin{enumerate}[]
+	\item Following protocol
+	\item Data collection and reporting
+	\item Presenting information
+	\end{enumerate}
+
+
+\subsection*{Education and Outreach \hfill 40\%}%
+
+	\lipsum[3]
+
+	\begin{enumerate}[]
+	\item Outreach points
+	\item Videos, displays, etc.
+	\end{enumerate}
+
+\subsection*{Reflection \hfill 20\%}%
+
+	\lipsum[4]
+	
+	The midterm has a focus on information while the final has a focus on reflection over accomplishments in the course.
+
+	\begin{enumerate}[]
+	\item Midterm and Final Exam
+	\item Video compilation
+	\item Soft skills, Accomplishments
+	\end{enumerate}
+
+
+%%
+%%
+%%
+\newpage\section*{Education and Outreach}
+
+\lipsum[3]
+
+\subsection*{Level 5 \hfill 80 points}
+
+Something that provides a direct and lasting contribution to the class, especially when involving a community partner. Typically expected to take one month to finish. Student is actively involved.
+
+	\begin{multicols}{2}\begin{enumerate}[label=$\bullet$]
+	\item Producing a video
+	\item Designing and implementing a new project
+	\item Designing and presenting a lesson
+	\item Off-site update about project
+	\item Engineering a complex solution
+	\item Watershed Academy
+	\item Vernal pool project
+	\item Article for GLSI web site
+	\end{enumerate}\end{multicols}
+
+
+\subsection*{Level 4 \hfill 40 points}
+
+Something that generally happens off-site
+
+	\begin{multicols}{2}\begin{enumerate}[label=$\bullet$]
+	\item Major participation in a video (much research)
+	\item Presenting a video off-site
+	\item Attending off-site meeting or event
+	\item Engineering a general solution
+	\item Publish research paper, major display
+	\item Major update to partner via e-mail
+	\item Apply for a grant
+	\end{enumerate}\end{multicols}
+
+\subsection*{Level 3 \hfill 20 points}
+
+	\lipsum[8]
+
+	\begin{multicols}{2}\begin{enumerate}[label=$\bullet$]
+	\item Participation in a video (some knowledge)
+	\item Pet Store trip outside of school
+	\item Major Field trip: attend or arrange
+	\item Collect water outside of school
+	\item Updating picture frame
+	\item Updating web site
+	\end{enumerate}\end{multicols}
+
+
+\subsection*{Level 2 \hfill 10 points}
+
+	\lipsum[7]
+
+	\begin{multicols}{2}\begin{enumerate}[label=$\bullet$]
+	\item Minor participation in a video (words prepared)
+	\item Minor informational display (maintenance)
+	\item Help in-school event
+	\item Communication with partner
+	\item Manual labor per half-hour
+	\item Tour for a student
+	\item Minor Field trip: attend or arrange
+	\item Advisory role
+	\item Volunteer substitute in an area
+	\end{enumerate}\end{multicols}
+
+
+\subsection*{Level 1 \hfill 2 points}
+
+Simple maintenance that happens outside of regular class time but during school hours. Maintenance that happens outside school hours is at least doubled if significant.
+
+	\begin{multicols}{2}\begin{enumerate}[label=$\bullet$]
+	\item Filing papers
+	\item Feeding sturgeon
+	\end{enumerate}\end{multicols}
+
+
+\lipsum[9]
+
+	\begin{multicols}{2}\begin{enumerate}[label=$\bullet$]
+	\item Attendance and folders
+	\item Feeding sturgeon
+	\item Checking hydroponics
+	\item Watering plants
+	\item Helping: sign-off and description
+	\end{enumerate}\end{multicols}
+
+
+
+%%
+%%
+%%
+\newpage\subsection*{Major Awards}
+These are presented to students at awards night.
+
+	\begin{enumerate}
+	\item Outstanding Contributions \ldots Student makes significant contributions to multiple areas during their time in the course. This requires at least four (4) semesters of work in the course. This requires that students be in regular communication with community partners, demonstrate initiative, are receiving an `A' in the course, and promote the ideals of the course. (e.g., Myranda, Rebecca, and Cheyenne). Difficult to receive this award. Superior work.
+
+	\item Completion of 4 or more semester \ldots This is for students who have been in the class for multiple semesters with no grade lower than a `B', good attendance or made up points.
+	
+	\item Outreach / Community Involvement \ldots For any student that has made a personal connection with a community partner include updates, providing relevant material, field trips, and time outside of class (e.g., Madison).
+
+	\item Video Production \ldots Produces an amazing video that provides important information to the community. Must be shown at least once to a community organization and published on the web site.
+	
+	\item Personal Project \ldots Student produces a new project that enhances the school and follows it to completion during their time in the course. Progress is documented in publishable form. (e.g., Fossil park)
+	\end{enumerate}
+
+
+
+
+%%
+%%
+%%
+\newpage\section*{Project Maintenance}
+This is the set of everyday tasks that students are to accomplish where students receive a weekly grade based on the number of days that week. This is expected to take no more than thirty (30) minutes in the beginning of the year. Students apply for an area, may work with one other person, and receive a weekly grade based upon accomplishments, reporting, and improvements. Improvements are the difference between an `A' and a `C.' Each area has a set of things that may be done for improvements.
+
+
+\begin{multicols}{2}
+	\subsection*{Animals and Habitat}
+	\begin{enumerate}
+	\item Hedgehog (male)
+	\item Hedgehog (female)
+	\item Rough Green Snake
+	\item Rose Hair Tarantula
+	\item Vermicomposting
+	\end{enumerate}
+
+	\begin{itemize}
+	\item Animal tracks
+	\item Bat houses
+	\item Birdhouses
+	\item Bird songs
+	\end{itemize}
+
+
+	\subsection*{Fisheries and Water}
+	\begin{enumerate}
+	\item Chinook Salmon
+	\item Goldfish
+	\item Lake Sturgeon
+	\item Lake Trout
+	\item Turtles
+	\end{enumerate}
+
+	\begin{itemize}
+	\item Sea Lamprey
+	\item Custom biofilter in pails
+	\item Stream table for classroom
+	\item Water quality testing
+	\item Macroinvertebrate identification
+	\item Fins, tails, and scales lesson
+	\item Vernal pools
+	\end{itemize}
+
+	
+	\columnbreak
+	
+	\subsection*{Plants and Forestry}
+	\begin{enumerate}
+	\item Classroom aquaculture
+	\item Greenhouse hydroponic
+	\item Soil plants
+	\end{enumerate}
+
+	\begin{itemize}
+	\item Apple orchard
+	\item Raingarden
+	\item Fossil park
+	\item School forest
+	\item Schoolyard habitat
+	\item Schoolyard signs
+	\item Signs in greenhouse
+	\item Veterans garden
+	\end{itemize}
+
+
+	\subsection*{Recycling and Energy}
+	\begin{enumerate}
+	\item Cardboard (includes backpack program)
+	\item Central
+	\item Elementary
+	\item Secondary
+	\end{enumerate}
+	
+	\begin{itemize}
+	\item Picking up trash around school
+	\item Reading gas meter
+	\item Reading renewable meters
+	\item Water filling station
+	\item Room occupancy sensors
+	\end{itemize}
+
+	
+	\subsection*{Miscellaneous}
+	\begin{itemize}
+	\item Fund raisers
+	\item Organizing room 302
+	\item Arranging guest speaker
+	\item GIS maps
+	\item Software training
+	\item Web page updates
+	\item Track class finances
+	\end{itemize}
+
+\end{multicols}
+
+
+
+
+%%
+%%
+%%
+\newpage\section*{Sample Maintenance \hfill Lake Sturgeon}
+
+Managing the Lake Sturgeon aquarium is an important part of the class as this is a threatened species and a center piece of the class. 
+
+\subsection*{Maintenance}
+\begin{multicols}{2}\begin{enumerate}
+	\item Update displays with sturgeon information
+
+	\item Good attendance and punctuality
+
+	\item Feed sturgeon on a daily basis and record
+
+	\item Create a chart of sturgeon growth, food, and temperature
+
+	\item Set-up and/or break down tank as necessary
+
+	\item Rinse filter at once every two weeks
+
+	\item Perform water changes as required by protocol
+
+	\item Water quality testing as requested
+
+	\item Collect temperature data
+
+	\item Ensure pumps and back filter in working condition
+
+	\item Clean chiller once a semester
+
+	\item Clean glass of finger prints, algae, etc.
+
+	\item Pictures and video of the sturgeon on a weekly basis
+
+	\item Measure the length of the sturgeon and record biweekly or monthly
+
+	\item Determine weight of the sturgeon if possible
+
+	\item Report on progress, data, etc. to Mr. Steensma at least once every 2 weeks
+
+	\item Watch videos on DNR
+
+	\item Compile a list of link of sturgeon information
+
+	\item Provide monthly updates for Sturgeon for Tomorrow
+
+	\item Arrange for Sturgeon Delivery and Release
+
+	\item Complete both permits for sturgeon
+
+	\item Arrange meeting with Ms. VanDael's class at Inland Lakes
+
+	\item Collect water from Black River for sturgeon tanks
+
+	\item Present lesson to an elementary class
+
+	\item Arrange tour of Sturgeon Rearing Facility
+
+	\item Arrange to help with Sturgeon Guard
+
+	\item Create signs and displays for the sturgeon tank
+
+	\item Base all decisions on data and research
+
+	\item Attend fisheries related field trips
+
+	\item Provide updates to the class and accomplishments
+
+	\item Ensure all food and materials are put away by the end of class
+
+	\item Provide short article for sturgeon in newsletter or video
+\end{enumerate}\end{multicols}
+
+
+
+
+%%
+%%
+%%
+\newpage\section*{Project Application \hfill Sample}
+NB: Do this on LibreOffice and then have students print the forms. This can be used especially for Tranportation requests, Field trip requests, and other things. It would be nice if these are saved.
+
+Find a way to make a shared space on Google Drive and then automatically download the documents that have changed. These could also be available on the school web site.
+
+\vspace*{3mm}
+
+{\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{ @{} l l }
+Name & \line(1,0){70} \\
+Date & \line(1,0){70} \\
+\end{tabular}
+}
+
+
+\subsection*{Project Area}
+Students select and project area in which to work every week. The first week students are trying out individual areas. Experienced students can choose to work in a particular area (consider impact) and work as mentors for additional points. Each week has a calendar that is to be followed and students are evaluated on their accomplishments. Each area also has outreach requirements for students to earn points. 
+
+{\begin{multicols}{3}
+\begin{enumerate}[label=$\square$]
+\item Animals and Habitat
+\item Fisheries and Water
+\item Plants and Forestry
+\item Recycling and Energy
+\item Technology and Data (independent study)
+\end{enumerate}
+\end{multicols}
+}
+
+\subsection*{Special Projects (optional)}
+In addition to a project area, students may also adopt a special project to earn outreach points. All special projects must be approved by the instructor and require logging of accomplishments. Students may also work on a special project exclusively without being involved in a project area. Students may also choose other projects of their own design.
+
+{\begin{multicols}{2}
+\begin{enumerate}[label=$\square$]
+\item Aquaponics \ldots design and build a aquaponic system 
+
+\item Biofilter \ldots create an aquarium biofilter out of a five-gallon bucket
+
+\item Fossil park \ldots complete the fossil park on the elementary playground
+
+\item Fund raising \ldots run a fund-raiser to raise money for the class
+
+\item Grant \ldots apply for a grant to complete a particular project
+
+\item Hydroponics \ldots set-up and maintain a personal hydroponic project in the class or the greenhouse 
+
+\item Aquatic invasive \ldots create an invasive species aquarium, research permits and acquiring specimens
+
+\item Macorinvertebrates \ldots learn to collect and identify aquatic macroinvertebrates (water bugs)
+
+\item Raingarden \ldots research and create a raingarden
+
+\item Sea lamprey
+
+\item Vernal pools \ldots research vernal pools
+\end{enumerate}
+\end{multicols}
+}
+
+
+
+
+
+
+\subsection*{Agreement}
+By turning in this application, you agree that you have read and understand the project area requirements.
+
+
+
+
+\newpage\section*{\it Soft Skills}
+
+	Due to it's nature as an applied courses, students will be evaluated on their knowledge and use of soft skills in the context of their projects. These skills will help determine project assignments. Provide examples illustrating that students can demonstrate each skill.
+
+	\subsection*{\it 1. Teamwork and Collaboration}
+	Employers want employees who play well with others -- who can effectively work as part of a team. ``That means sometimes being a leader, sometimes being a good follower, monitoring the progress, meeting deadlines and working with others across the organization to achieve a common goal,'' says Lynne Sarikas, the MBA Career Center Director at Northeastern University.
+
+	The ability to work in teams, relate to people and manage conflict is a valuable asset in the workplace. This skill is important to get ahead -- and as you advance in your career, the aptitude to work with others becomes even more crucial. Personal accomplishments are important on your resume, but showing that you can work well with others is important too.
+
+	It is imperative for college-bound students to function efficiently and appropriately in groups, collaborate on projects and accept constructive criticism when working with others. People who succeed only when working alone will struggle in college and beyond, as the majority of careers require collaboration.
+
+
+	\subsection*{\it 2. Enthusiasm and Attitude}
+	Give examples of how you improved employee morale in a past position, or how your positive attitude helped motivate your colleagues or those you managed. Earnest suggests: ``Some people are naturally bubbly and always upbeat. Others have a more tame and low-energy demeanor. Especially if you tend to be more low-key, smile when you shake the interviewer's hand and make an extra effort to add some intonation and expression to your responses.''
+
+	Enthusiasm, Positive attitude, Accepting responsibility, Eagerness to learn new things, Open to new ideas
+
+	
+	\subsection*{\it 3. Verbal and Non-verbal Communication}
+	Communication skills involve active listening, presentation as well as excellent writing capabilities. One highly sought-after communication skill is the ability to explain technical concepts to partners, customers and coworkers that aren't tech savvy.
+
+	Students can demonstrate these skills through interaction with peers, communication with staff, participating in meetings, constructing e-mails, creating displays, writing letters, giving presentations, using appropriate body language, maintaining eye contact, actively listening, asking good questions, and speaking on the telephone.
+
+
+	\subsection*{\it 4. Problem Solving and Critical Thinking}
+	The ability to use creativity, reasoning, past experience, information, and available resources to assess issues and resolve issues is attractive because it saves everyone at the organization valuable time. Highlight this skill by listing an example of when your organization had a sticky situation and you effectively addressed it.
+
+	Project management skills: Organization, planning and effectively implementing projects and tasks for yourself and others is a highly effective skill to have. In the past, this was a job in itself. Nowadays, many companies aren't hiring project managers because they expect all of their employees to possess certain characteristics of this skill.
+
+
+	\subsection*{\it 5. Professionalism and Work Ethic}
+	Employers are looking for employees that take initiative, are reliable and can do the job right the first time. Managers don't have the time or resources to babysit, so this is a skill that is expected from all employees. Don't make the hiring manager second-guess by sending a resume with typos, errors and over-exaggerated work experience.
+
+	Employers are on the lookout for people who take pride in their work, and are confident enough to put their name to it. They also respect people who can hold their hands up when things go wrong, and don't pass the buck. Everyone makes mistakes -- it's how you react and learn from them that counts.
+
+
+	
+% 	\begin{itemize}
+% 		\item Research, IT Skills, Data analysis, Problem solving, Creativity
+% 	\end{itemize}
+% 
+% 
+% \subsection*{Interpersonal skills; Teamwork}
+% 
+% 	
+% 
+% 	\begin{itemize}
+% 	
+% 		\item Acting as a team player -- this means not only being cooperative, but also displaying strong leadership skills when necessary.
+% 
+% 		\item 5. Leadership: While it is important to be able to function in a group, it is also important to demonstrate leadership skills when necessary. Both in college and within the workforce, the ability to assume the lead when the situation calls for it is a necessity for anyone who hopes to draw upon their knowledge and ``hard'' skills in a position of influence.
+% 
+% 		Companies wish to hire leaders, not followers. The best way for students to develop this skill as they prepare for college is to search for leadership opportunities in high school. This could mean, among other things, acting as captain of​ an athletic team, becoming involved in student government or leading an extracurricular group. 
+% 		
+% 		\item Employers want employees who play well with others -- who can effectively work as part of a team. ``That means sometimes being a leader, sometimes being a good follower, monitoring the progress, meeting deadlines and working with others across the organization to achieve a common goal,'' says Lynne Sarikas, the MBA Career Center Director at Northeastern University.
+% 
+% 		\item A good team player has the team goals clear in their mind and works with others to achieve them. They are open and honest, and offer constructive suggestions and listen to others.
+% 
+% 		\item A report from The Economist Intelligence Unit found that 63 percent of executives believe today's workforce lacks collaboration and teamwork skills. How do you know if you personally lack such skills? Try asking yourself the following questions:
+% 
+% 		- Do you think your approach to things is always the best?
+% 
+% 		- Do you hate it when other people question your approach to things?
+% 
+% 		- Do you hate working on assignments that require you to rely on others in order to get work done?
+% 
+% 		\item No person is an island. You need to be comfortable working, collaborating and interacting with others. So pitch in when needed, respect others opinions, sit in on group meetings and provide solutions. 
+% 
+% 		\item Teamwork -- cooperative, gets along with others, agreeable, supportive, helpful, collaborative
+% 
+% 		``Coming together is a beginning. Keeping together is progress. Working together is success.'' Henry Ford
+% 
+% 	\end{itemize}
+% 
+% 
+% 
+% \subsection*{Verbal and Written Communication skills}
+% 
+% 	It's more than just speaking the language. Communication skills involve active listening, presentation as well as excellent writing capabilities. One highly sought-after communication skill is the ability to explain technical concepts to partners, customers and coworkers that aren't tech savvy.
+% 	
+% 	Students can demonstrate these skills through interaction with peers, communication with staff, participating in meetings, constructing e-mails, creating displays, writing letters, giving presentations, using appropriate body language, maintaining eye contact, actively listening, asking good questions, and speaking on the telephone.
+% 
+% 	\begin{itemize}
+% 		\item It's more than just speaking the language. Communication skills involve active listening, presentation as well as excellent writing capabilities. One highly sought-after communication skill is the ability to explain technical concepts to partners, customers and coworkers that aren't tech savvy.
+% 
+% 		\item this is paramount to almost any job. Communication involves articulating oneself well, being a good listener and using appropriate body language.
+% 		
+% 		\item A common complaint among employers is that young people do not know how to effectively carry on a conversation and are unable to do things like ask questions, listen actively and maintain eye contact.
+% 
+% 		The current prevalence of electronic devices has connected young individuals to one another, but many argue it has also lessened their ability to communicate face-to-face or via telephone. These skills will again be important not only in college, where students must engage with professors to gain references and recommendations for future endeavors, but beyond as well.
+% 
+% 		An inability to employ these skills effectively translates poorly in college and job interviews, for instance. High school students can improve these traits by conversing with their teachers in one-to-one settings. This is also excellent training for speaking with college professors. Obtaining an internship in a professional setting is also a wonderful method to enhance communication and interpersonal skills.
+% 
+% 		\item This doesn't mean you have to be a brilliant orator or writer. It does mean you have to express yourself well, whether it's writing a coherent memo, persuading others with a presentation or just being able to calmly explain to a team member what you need.
+% 
+% 		\item This is perhaps the most common entry on person specifications for job vacancies, and for good reason. Skilled communicators get along well with colleagues, listen and understand instructions, and put their point across without being aggressive. They can change their style of communication to suit the task in hand -- this can be invaluable in many different situations, from handling conflict to trying to persuade a customer of the benefits of buying your product. If you've got good communication skills you should be able develop constructive working relationships with colleagues and be able to learn from constructive criticism.
+% 
+% 		\item Communication skills are one of the most important soft skills managers need to be effective. Managers must possess the ability to get their point across to employees, co-workers and customers. Effective communications ensures that everyone is on the same page and know what is expected of them.
+% 
+% 		\item The activities in this section will not only help participants practice and recognize how they provide information to others, but also help them consider how others may prefer to receive information. It is important to reinforce with participants that communication skills involve give and take -- and they can, indeed, be learned and strengthened over time.
+% 		
+% 		\item By ``communication,'' I mean more than just being able to exchange information with colleagues face-to-face, on the phone, and via emails and reports. Everyone can pretty much do that.
+% 
+% 		Rather, employers are looking for more advanced communication skills, particularly in the STEM fields. Businesses want employees who can communicate complex ideas clearly to the layman and the expert alike and through multiple mediums. Persuasion and negotiation skills are crucial in this respect. If you want to be a highly employable and progressive professional, you'll really need to master these advanced communication skills.
+% 		
+% 		\item Your interview is a great opportunity to demonstrate how well you communicate, so be sure you prepare and practice responses to showcase your best skills. Earnest says, ``Be concrete with these examples, and bring proof to the interview. Provide examples of materials you created or written campaigns you developed in past positions.''
+% 		
+% 		\item Articulate and skilled communicators are able to clearly express thoughts and ideas and understand the tasks at hand. Also, they get along with colleagues because they tend to be better listeners.
+% 		
+% 		\item Communication -- oral, speaking capability, written, presenting, listening.
+% 
+% 		``You can have brilliant ideas, but if you can’t get them across, your ideas won’t get you anywhere.'' Lee Iacocca
+% 
+% 	\end{itemize}
+
+
+
+
+\newpage
+\section*{Rubric for All Groups}
+
+
+
+
+\end{document}
+
+
+
+INFORMATION
+* What do sturgeon eat?
+
+* Parts of the sturgeon
+
+* Unique characteristics
+
+* Talking points (discuss with student individually)
+
+
+PROJECT (6)
+* Video on the Lake Sturgeon, specific topic:
+	History of Sturgeon
+	Parts of the Sturgeon
+	Maintenance of Sturgeon
+	Water Quality testing
+	Mitigation efforts of DNR and other groups
+
+
+	If no one picks up a project it is maintained by someone for additional points.
+	For example, if no one wishes to care for the snake, someone is assigned this
+	task for additional maintenance points. The same applies to feeding the sturgeon
+	in the morning or after school. Students may also expand up projects or adopt
+	new projects. There must be a record of their project. There are also maintenance
+	points available when someone is absent or must leave early. There are two aspects
+	to a project: mainteance, research, and expansion. There is also a substitute list
+	that is used when we need someone to fill in. These are marked on the applications.
+
+	Each area also has a list of volunteers to be called upon for maintenance.
+
+	I would like to include lessons or should students present the lessons?
+
+
+
+
+
+MAINTENANCE (20) - ~20\% (2.5 points per day)
+
+STUDENTS MUST SLSO COLLECT IMPROVEMENT POINTS
+
+
+	RECYCLING AND ENERGY
+	====================
+	Recycling program (elementary, etc.)
+
+	TECHNOLOGY AND DATA
+	===================
+	Data: greenhouse meter, solar panels
+
+
+* What does a daily routine look like? Students come in, receive assigned tasks,
+  and complete those tasks. Tasks have deadlines. Students may choose their group.
+
+* Students choose/assigned for Major Projects on a periodic basis. This may be
+  for outreach points or it may be extra credit.
+
+* Completing all maintenance earns an A (9.5)
+
+* Minor displays, paperwork
+
+* Basic knowledge (quizzes, per area)
+
+* application and goals
+	may change areas the day before each week
+
+* divide tasks and rotate schedule (or group may choose to decide)
+
+* checked twice per week?
+	folders per project area
+	group meeting every week (T:A/F, R:R/P)
+
+* signed off by supervisor who simply checks daily
+	rotated responsibility, additional  points
+
+* additional project
+	vermicompost
+	newsletter
+	organizer / area mentor
+	fossil park
+	sea lamprey
+	earth day bags
+	earth week plus display (even if not attending)
+
+GRADED ON A--G,0 scale
+- all students should pass
+
+
+REFLECTION (2) - ~20\% Mid-term and Final (100 points) individual; required of all students
+* Answers 5 questions
+	positive impact
+	soft skill set
+	community partner
+	event description
+	learning experience
+
+RESEARCH (4) - ~40\% (100 points each, 1 per 5 weeks); minimum of 2 research
+* format
+	video (preferred, most additional points)
+	public presentation (a lot additional points)
+	poster, display, model
+	written paper, reduced points (up to 80 points)
+	web page (some additional points)
+	journal, diary
+	
+	students can also use outreach, 
+
+* application of intent
+	may be changed as desired, no duplicates, check on progress
+
+* criteria
+	how will it be communicated to community
+	good fit for student goals
+	accuracy of information
+	spelling, grammar, punctuation, etc.
+	interest to audience
+	minimum length (relative to other criteria)
+	usefulness to course
+	what was individual student contribution if in group
+	how many were involved? (teacher directed, student selection)
+	artifact of event
+
+---
+
+ATTENDANCE
+- one percent for absence, one-half percent tardy (up to 20 min late w/o pass)
+- study hall (0.5)
+- extended lunch (more than 4 min)
+
+
+AWARDS AND RECOGMITION
+- 4 or more semesters
+- outstanding contribution (overall, multiple areas, communication)
+- amazing research or project
+- out-of-class time (meetings)
+- connection to community
+- student nomination (something daily, appreciation)
+
+
+CALENDAR
+- schedule of events for course
+- early preparation
+
+
+OUTREACH
+- use scale already created
+- submitted deadlines
+- small form to complete
+- more points for superior presentation
+- include dates, times, etc.
+- may be completed online
+- half-sheet of paper
+- may do video, summary, etc for more credit
+- mentoring (experienced student)
+
+
+
+
+TECHNOLOGY COURSE (Repeatable)
+* VEX robotic kits
+* Programming Java, python
+* Raspberry PI, Arduino
+* GIS
+* Databases
+* Web pages
+* Video production
+
+OTHER
+* Underwater ROV
+
+
+
+
+OUTREACH FORM
+
+Name
+
+Date and Time
+
+Have multiple lines for things like making and being in a video, feeding sturgeon multiple days, arranging and going on a field trip, etc.
+
+Event
+
+Level and Points
+
+Description or artifacts
+
+
+
+
+% Non-Google doc File : https://docs.google.com/uc?id=[FILE_ID]&export=download
+% Format : none
+% 
+% Google Document : https://docs.google.com/document/d/[FILE_ID]/export?format=[FORMAT]
+% FORMAT : docx, odt, rtf, pdf, txt, html
+% 
+% Google Presentation : https://docs.google.com/presentation/d/[FILE_ID]/export?format=[FORMAT]
+% FORMAT : pptx, pdf, svg, png, jpg 
+% 
+% Google Drawings : https://docs.google.com/drawings/d/[FILE_ID]/export/[FORMAT]
+% FORMAT : pdf, svg, png, jpg
+
