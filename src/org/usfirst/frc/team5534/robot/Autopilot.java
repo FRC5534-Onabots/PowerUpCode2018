@@ -45,13 +45,13 @@ public class Autopilot {
 	}
 
 
-	public static void TurnToHeading( double targetHeading, double tolerance ) {
-		if ( Autonomous.WaitForTarget( tolerance ) ) {
-
-			Autonomous.StillWorking = true;
-			
-		} else { Drivetrain.Stop(); LastBearing = targetHeading; }
-	}
+//	public static void TurnToHeading( double targetHeading, double tolerance ) {
+//		if ( Autonomous.WaitForTarget( tolerance ) ) {
+//
+//			Autonomous.StillWorking = true;
+//			
+//		} else { Drivetrain.Stop(); LastBearing = targetHeading; }
+//	}
 	
 	
 	public static void TurnToTarget( double tolerance ) {
