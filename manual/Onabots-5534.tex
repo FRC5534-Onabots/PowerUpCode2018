@@ -70,19 +70,36 @@ Another picture showing the labelled parts of the roborio would be good.
 
 \includegraphics[width=.25\textwidth]{images/spark}
 
-Different types of motor controllers. List the different kinds as well as advantages and disadvantages of each. Include links to AndyMark with prices and descriptions.
 
-A motor controller can control more than one motor but need a PWM split cable.
+\subsection*{Notes}
+\begin{itemize}
+\item Different types of motor controllers. Onabots use Sparks due to low price. Have not met any limitations.
 
-Talk about PWM, as Pulse Width Modulated. Varies the amount of time that a voltage is applied to the motor.
+\item A motor controller can control more than one motor but need a PWM split cable.
 
-Range of motor controller values: \num{-1} to \num{1} with \num{0} indicating no motion.
+\item Talk about PWM, as Pulse Width Modulated. Varies the amount of time that a voltage is applied to the motor.
 
-Actually good to set motor speed from an encoder instead of motor power. Speed changes with friction, internal resistance, and battery voltage.
+\item Range of motor controller values: \SIrange{-1}{1}{} with \num{0} denoting no power.
 
-Wiring requirements, what size gauge is needed?
+\item Actually good to set motor speed from an encoder instead of motor power. Speed changes with friction, frame resistance, and battery voltage.
 
-Braking vs Coast mode
+\item Wiring requirements, what size gauge is needed?
+
+\item Braking vs Coast mode (has not been used)
+
+\item 
+\end{itemize}
+
+\subsection*{Java}
+\lstset{language=Java}
+\begin{lstlisting}[language=Java]
+	// DEFINE SPARK
+	public static Spark DriveMotorRF = new Spark( Ports.PWM_DriveMotorRF );
+
+	// SET POWER
+	DriveMotorRF.set( 0.50 );
+\end{lstlisting}
+
 
 
 %%

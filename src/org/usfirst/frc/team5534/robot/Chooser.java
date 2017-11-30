@@ -1,11 +1,8 @@
 package org.usfirst.frc.team5534.robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class Chooser {
 
-	public static final String autonDoNothing     = "Do Nothing";
+	public static final String autonDoNothing     = "Pout";
 	public static final String autonLeftStation   = "Left Station";
 	public static final String autonCenterStation = "Center Station";
 	public static final String autonRightStation  = "Right Station";
@@ -15,24 +12,19 @@ public class Chooser {
 	public static String autonSelected = autonTesting;
 
 
-	public static AnalogInput autonChooser = new AnalogInput(
-		Ports.AIO_AutonPotent );
-
     public static void GetSelected() {
     	
-    	double voltage = autonChooser.getVoltage() / 5.00 * 100;
+    	double voltage = 6 * DigitBoard.getInstance().getPotentiometer();
     	
-    	voltage = 100;
+    	if ( voltage < 1 ) { autonSelected = autonDoNothing;    }
     	
-    	if ( voltage < 10 ) { autonSelected = autonDoNothing;    }
+    	else if ( voltage < 2 ) { autonSelected = autonLeftStation;   }
     	
-    	else if ( voltage < 30 ) { autonSelected = autonLeftStation;   }
+    	else if ( voltage < 3 ) { autonSelected = autonCenterStation; }
     	
-    	else if ( voltage < 50 ) { autonSelected = autonCenterStation; }
+    	else if ( voltage < 4 ) { autonSelected = autonRightStation;  }
     	
-    	else if ( voltage < 70 ) { autonSelected = autonRightStation;  }
-    	
-    	else if ( voltage < 90 ) { autonSelected = autonCrossBaseline; }
+    	else if ( voltage < 5 ) { autonSelected = autonCrossBaseline; }
     	
     	else { autonSelected = autonTesting; }
     	

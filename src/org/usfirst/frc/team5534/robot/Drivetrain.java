@@ -8,7 +8,7 @@ public class Drivetrain {
 	public static Spark DriveMotorLR = new Spark( Ports.PWM_DriveMotor_LR );
 	public static Spark DriveMotorRF = new Spark( Ports.PWM_DriveMotor_RF );
 	public static Spark DriveMotorRR = new Spark( Ports.PWM_DriveMotor_RR );
-	
+
 	public static double DrivePowerL;
 	public static double DrivePowerR;
 
