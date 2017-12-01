@@ -30,7 +30,7 @@ public class Station {
 	 
 	
 	public static void Testing() {
-		switch (Autonomous.StageNumber) {
+		switch (Stage.Number) {
 
 			case 0:
 				Navigation.Reset();
@@ -41,13 +41,13 @@ public class Station {
 				break;
 
 			case 2:
-				Drivetrain.TurnToHeading( 60 );
-				Autonomous.WaitForDuration( 4 );
+//				Drivetrain.TurnToHeading( 60 );
+				Stage.WaitForDuration( 4 );
 				break;
 				
 			case 3:
-				Drivetrain.DriveToTarget( 32 );
-				if ( Navigation.GetRange() > 16 ) { Autonomous.StillWorking = true; }
+//				Drivetrain.DriveToTarget( 32 );
+				if ( Navigation.GetRange() > 16 ) { Stage.StillWorking = true; }
 				break;
 				
 			case 4:
@@ -55,7 +55,7 @@ public class Station {
 				break;
 				
 			default:
-				Autonomous.LastStage();
+				Stage.Last();
 				break;
 		}
 				

@@ -6,43 +6,44 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
-		Vision.Initialize();
+		Collector.Init();
+		Dashboard.Init();
+		Navigation.Init();
+		Vision.Init();
+		
+		Drivetrain.Init();
 	}
 
 	@Override
-	public void robotPeriodic()      {
-		Drivetrain.DriveByPower( Drivetrain.PowerD, Drivetrain.PowerT );
-		Dashboard.Update();
-		Monitor.Write();
+	public void robotPeriodic() {
+		Collector.Periodic();
+		Dashboard.Periodic();
+		Navigation.Periodic();
+		Vision.Periodic();
+		
+		Drivetrain.Periodic();
 	}
 
 
 	@Override
-	public void disabledInit()       {
-		Monitor.Close();
-	}
+	public void disabledInit()       { Disabled.Init();       }
 
 	@Override
-	public void disabledPeriodic()   {}
+	public void disabledPeriodic()   { Disabled.Periodic();   }
 
 
 	@Override
-	public void autonomousInit()     {
-		Autonomous.Init();
-	}
+	public void autonomousInit()     { Autonomous.Init();     }
 	
 	@Override
 	public void autonomousPeriodic() { Autonomous.Periodic(); }
 
 
 	@Override
-	public void teleopInit()         {
-		Teleop.Init();
-		Monitor.Open();
-	}
+	public void teleopInit()         { Operator.Init();       }
 
 	@Override
-	public void teleopPeriodic()     { Teleop.Periodic();     }
+	public void teleopPeriodic()     { Operator.Periodic();   }
 	
 	
 	@Override

@@ -19,7 +19,7 @@ public class Navigation {
 	
 	// ===
 	
-	public static void Initialize() {
+	public static void Init() {
 		DriveEncoderR.setDistancePerPulse(0.009523);
 		DriveEncoderR.reset();
 		Sonar.setAutomaticMode(true);
@@ -28,8 +28,12 @@ public class Navigation {
 	}
 
 	
+	public static void Periodic() {
+		
+	}
+	
+
 	public static void Reset() {
-		DriveEncoderR.setDistancePerPulse(0.009523);
 		DriveEncoderR.reset();
 		Sonar.setAutomaticMode(true);
 		Gyroscope.reset();

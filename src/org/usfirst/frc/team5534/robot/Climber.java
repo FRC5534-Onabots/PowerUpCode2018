@@ -7,13 +7,26 @@ public class Climber {
 	public static Spark ClimbMotor = new Spark( Ports.PWM_ClimbMotor );
 
 	
+	public static double Power = 0;
+
+	
+	public static void Init() {
+		Power = 0;
+	}
+	
+	
+	public static void Periodic() {
+		ClimbMotor.set( Power );
+	}
+
+		
 	public static void Ascend() {
-		ClimbMotor.set( Preferences.ClimbSpeed );
+		Power = Preferences.ClimbSpeed;
 	}
 	
 	
 	public static void Stop() {
-		ClimbMotor.set( 0.00 );
+		Power = 0;
 	}
 
 }

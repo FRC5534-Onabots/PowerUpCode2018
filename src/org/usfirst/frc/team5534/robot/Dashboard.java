@@ -3,8 +3,6 @@ package org.usfirst.frc.team5534.robot;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-
 public class Dashboard {
 
 	// The dashboard package communicates with the SmartDashboard on the Driver Station.
@@ -18,27 +16,29 @@ public class Dashboard {
 		DashboardNetworkTable.putNumber( key, value );
 	}
 	
+	
+	public static void Init() {}
+	
 
-	public static void Update() {
+	public static void Periodic() {
 
 		// DIGIT BOARD
 		SmartDashboard.putBoolean("Button A", DigitBoard.getInstance().getA() );
 		SmartDashboard.putBoolean("Button B", DigitBoard.getInstance().getB() );
 		Double("Potentiometer", DigitBoard.getInstance().getPotentiometer() );
 
-		Chooser.GetSelected();
 		DigitBoard.getInstance().writeDigits( Chooser.autonSelected );
 		
 		// MOTOR POWER
-		Double("L Power",  Drivetrain.DrivePowerL     );
-		Double("R Power",  Drivetrain.DrivePowerR     );
+		Double("L Power",  Drivetrain.PowerL     );
+		Double("R Power",  Drivetrain.PowerR     );
 
 		// MOTOR SPEED
 		Double("Thurst",   Navigation.GetDriveSpeed() );
 		Double("Speed",    Navigation.GetDriveSpeed() );
 		Double("Distance", Navigation.GetDistance()   );
 
-		Double("Stage",    Autonomous.StageNumber     );
+		Double("Stage",    Stage.Number               );
 		
 		// GYROSCOPE
 		Double("Heading",  Navigation.GetHeading()    );

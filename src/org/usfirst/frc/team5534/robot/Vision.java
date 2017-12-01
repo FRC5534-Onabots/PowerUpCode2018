@@ -8,15 +8,17 @@ public class Vision {
 
     public static UsbCamera PilotCamera;
 
-    public static void Initialize() {
+    public static void Init() {
 	    PilotCamera = CameraServer.getInstance().startAutomaticCapture();
 	    PilotCamera.setFPS(30);
     }
 
-
-    // ===
     
-
+    public static void Periodic() {
+    	
+    }
+   
+    
     public static double TargetScore;
     public static double TargetX;
     public static double TargetY;

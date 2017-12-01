@@ -11,7 +11,7 @@ public class Chooser {
 
 	public static String autonSelected = autonTesting;
 
-
+	
     public static void GetSelected() {
     	
     	double voltage = 6 * DigitBoard.getInstance().getPotentiometer();

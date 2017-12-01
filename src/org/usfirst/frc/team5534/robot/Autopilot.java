@@ -5,31 +5,28 @@ public class Autopilot {
 	public static double LastBearing = 0;
 	
 	
-	public static void DriveForwardToDistance( double targetSpeed, double targetDistance ) {
-		if ( Autonomous.GetStageDistance() < targetDistance ) {
-			
-			Drivetrain.DriveToHeading( targetSpeed, LastBearing );
-			Autonomous.StillWorking = true;
+	public static void ResetHeading( double targetHeading ) {
+		LastBearing = targetHeading;
+	}
 
-		} else { Drivetrain.Stop(); }
+
+	public static void DriveForwardToDistance( double targetSpeed, double targetDistance ) {
+		Pilot.DriveToHeading( targetSpeed, LastBearing );
+		Stage.WaitForForwardDistance( targetDistance );
 	}
 
 	
 	public static void DriveReverseToDistance( double targetSpeed, double targetDistance ) {
-		if ( Autonomous.GetStageDistance() > -targetDistance ) {
-	
-			Drivetrain.DriveToHeading( -targetSpeed, LastBearing );
-			Autonomous.StillWorking = true;
-			
-		} else { Drivetrain.Stop(); }
+		Pilot.DriveToHeading( -targetSpeed, LastBearing );
+		Stage.WaitForReverseDistance( targetDistance );
 	}
 
 	
 	public static void DriveToSurface( double targetSpeed, double targetDistance ) {
 		if ( Navigation.GetRange() > targetDistance ) {
 
-			Drivetrain.DriveToHeading( targetSpeed, LastBearing );
-			Autonomous.StillWorking = true;
+//			Drivetrain.DriveToHeading( targetSpeed, LastBearing );
+			Stage.StillWorking = true;
 
 		} else { Drivetrain.Stop(); }
 	}
@@ -38,8 +35,8 @@ public class Autopilot {
 	public static void DriveToTarget( double targetSpeed, double targetDistance ) {
 		if ( Navigation.GetRange() < targetDistance ) {
 
-			Drivetrain.DriveToTarget( targetSpeed );
-			Autonomous.StillWorking = true;
+//			Drivetrain.DriveToTarget( targetSpeed );
+			Stage.StillWorking = true;
 			
 		} else { Drivetrain.Stop(); }
 	}
